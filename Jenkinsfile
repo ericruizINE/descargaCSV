@@ -27,8 +27,6 @@ pipeline {
                 // Activar el entorno virtual e instalar las dependencias
                 sh """
                     . ${VENV_DIR}/bin/activate
-                    cd ${VENV_DIR}
-                    pwd
                     pip install --no-cache-dir -r requirements.txt
                 """
             }
