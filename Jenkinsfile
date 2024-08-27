@@ -1,5 +1,11 @@
 pipeline {
     agent any
+
+    options {
+        // Limpiar el workspace antes de cada ejecución
+        cleanWs()
+    }
+    
     environment {
         VENV_DIR = '/var/jenkins_home/workspace/Descarga CSV Publicación/venv'
     }
@@ -22,6 +28,8 @@ pipeline {
                 // Activar el entorno virtual e instalar las dependencias
                 sh """
                     . ${VENV_DIR}/bin/activate
+                    cd ${VENV_DIR}
+                    pwd
                     pip install --no-cache-dir -r requirements.txt
                 """
             }
