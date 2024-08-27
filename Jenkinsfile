@@ -8,16 +8,17 @@ pipeline {
               //source venv/bin/activate
               sh 'python3 -m venv venv'
               source venv/bin/activate
+              python3 -m pip install --upgrade pip
               sh pwd
             }
         }
     stage('Install Dependencies') {
             steps {
-                pip install -r requirements.txt
-                //pip install requests
-                //pip install selenium
-                //pip install webdriver-manager
-                //pip install pandas
+                // pip install -r requirements.txt
+                pip install requests
+                pip install selenium
+                pip install webdriver-manager
+                pip install pandas
             }
         }
     stage('version') {
