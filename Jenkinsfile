@@ -17,7 +17,7 @@ pipeline {
       }
     }
     }
-    stage('presidencia') {
+    stage('publicacion') {
       steps {
         sh 'python3 publicacion.py'
       }
