@@ -24,7 +24,7 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     python --version
-                """
+                '''
             }
           }
         stage('download') {
