@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Install venv') {
             steps {
-                // Instalar el paquete python3-venv
+                // Instalar el paquete python3-venv si aún no está instalado
                 sh 'apt-get update && apt-get install -y python3-venv'
             }
         }
@@ -21,7 +21,7 @@ pipeline {
                 // Activar el entorno virtual e instalar las dependencias
                 sh """
                     . ${VENV_DIR}/bin/activate
-                    pip install -r requirements.txt
+                    pip install --no-cache-dir -r requirements.txt
                 """
             }
         }
