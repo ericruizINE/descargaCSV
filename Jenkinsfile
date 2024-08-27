@@ -4,7 +4,7 @@ pipeline {
     stage('Setup') {
             steps {
                 // Instalar virtualenv si no está instalado
-                sh 'pip3 install --root virtualenv'
+                //sh 'pip3 install --root virtualenv'
                 // Crear el entorno virtual
                 sh 'python3 -m venv venv'
             }
