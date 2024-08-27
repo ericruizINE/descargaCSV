@@ -4,15 +4,15 @@ pipeline {
         VENV_DIR = '/var/jenkins_home/workspace/Descarga CSV Publicación/venv'
     }
     stages {
-        stage('Checkout') {
+        stage('Install venv') {
             steps {
-                // Clonar el repositorio Git
-                git url: 'https://github.com/ericruizINE/descargaCSV.git', branch: 'main'
+                // Instalar el paquete python3-venv
+                sh 'apt-get update && apt-get install -y python3-venv'
             }
         }
         stage('Setup Virtualenv') {
             steps {
-                // Crear el entorno virtual en el workspace
+                // Crear el entorno virtual
                 sh "python3 -m venv ${VENV_DIR}"
             }
         }
