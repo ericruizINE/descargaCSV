@@ -6,20 +6,22 @@ pipeline {
     stages {
         stage('Setup Virtualenv') {
             steps {
-                sh 'pip3 install --user virtualenv'
+                // Crear el entorno virtual usando venv
                 sh "python3 -m venv ${VENV_DIR}"
             }
         }
         stage('Install Requirements') {
             steps {
+                // Activar el entorno virtual e instalar las dependencias
                 sh """
                     . ${VENV_DIR}/bin/activate
                     pip install -r requirements.txt
                 """
             }
         }
-        stage('Version Python') {
+        stage('Run Tests') {
             steps {
+                // Ejecutar tests dentro del entorno virtual
                 sh """
                     . ${VENV_DIR}/bin/activate
                     python --version
