@@ -6,13 +6,13 @@ pipeline {
                 // Crear el entorno virtual
               //cd '/var/jenkins_home/workspace/Descarga CSV/path/to/venv.'
               //source venv/bin/activate
-              sh 'python3 -m venv /path/to/venv.'
+              sh 'python3 -m venv venv'
             }
         }
     stage('Install Dependencies') {
             steps {
                 // Activar el entorno virtual y luego instalar las dependencias
-                sh . venv/bin/activate
+                sh source venv/bin/activate
                   //pip install -r requirements.txt
                 pip install requests
                 pip install selenium
