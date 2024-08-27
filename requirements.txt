@@ -3,3 +3,5 @@ pandas
 numpy
 selenium
 webdriver_manager
+rich
+pytz
