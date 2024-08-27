@@ -16,11 +16,10 @@ pipeline {
         sh 'py presidencia.py'
       }
     }
-    }
     stage('publicacion') {
       steps {
         sh 'py publicacion.py'
       }
     }
+    }
   }
-}
