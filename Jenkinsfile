@@ -8,6 +8,7 @@ pipeline {
             steps {
                 // Instalar el paquete python3-venv si aún no está instalado
                 sh 'apt-get update && apt-get install -y python3-venv'
+                sh 'apt-get update && apt-get install -y python3-pip'
             }
         }
         stage('Setup Virtualenv') {
