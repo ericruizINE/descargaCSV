@@ -64,11 +64,8 @@ pipeline {
         }
         stage('Validacion Publicación') {
           steps {
-            sh """
-                    . ${VENV_DIR}/bin/activate
-                    python3 publicacion.py
-               """
-          }
+        sh 'python3 publicacion.py'
+      }
         }
     }
   }
