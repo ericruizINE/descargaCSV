@@ -9,7 +9,6 @@ pipeline {
                 deleteDir()
             }
         }
-        stages {
         stage('Checkout') {
             steps {
                 // Clonar el repositorio Git
