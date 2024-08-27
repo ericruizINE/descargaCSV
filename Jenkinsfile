@@ -46,6 +46,17 @@ pipeline {
                 """
             }
           }
+        stage('Install ChromeDriver') {
+            steps {
+                // Descarga e instala la versión correcta de ChromeDriver
+                sh """
+                    CHROME_VERSION=$(google-chrome --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
+                    CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+                    wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+                    unzip chromedriver_linux64.zip -d /usr/local/bin/
+                """
+            }
+        }
         stage('Descarga de CSV') {
           steps {
             sh """
