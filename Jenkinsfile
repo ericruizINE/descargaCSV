@@ -3,28 +3,27 @@ pipeline {
   stages {
     stage('Setup') {
             steps {
+                // Instalar virtualenv si no está instalado
+                sh 'pip3 install --user virtualenv'
                 // Crear el entorno virtual
-              //cd '/var/jenkins_home/workspace/Descarga CSV/path/to/venv.'
-              //source venv/bin/activate
-              sh 'python3 -m venv venv'
-              //sh 'source venv/bin/activate'
-              sh '. venv/bin/activate'
-              //sh 'python3 -m pip install --upgrade pip'
-              sh 'pwd'
+                sh 'python3 -m venv venv'
             }
         }
     stage('Install Dependencies') {
             steps {
-                // pip install -r requirements.txt
-                sh 'pip install requests'
-                sh 'pip install selenium'
-                sh 'pip install webdriver-manager'
-                sh 'pip install pandas'
+                // Activar el entorno virtual y luego instalar las dependencias
+                sh '''
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                '''
             }
         }
     stage('version') {
       steps {
+        sh '''
+              . venv/bin/activate
         sh 'python3 --version'
+        '''
       }
     }
     stage('download') {
