@@ -1,46 +1,45 @@
 pipeline {
-  agent any
-  stages {
-    stage('Setup') {
+    agent any
+    environment {
+        VENV_DIR = 'venv'
+    }
+    stages {
+        stage('Setup Virtualenv') {
             steps {
-                // Instalar virtualenv si no está instalado
-                //sh 'pip3 install --root virtualenv'
-                sh 'apt install python3.11-venv'
-                // Crear el entorno virtual
-                sh 'python3 -m venv venv'
+                sh 'pip3 install --user virtualenv'
+                sh "python3 -m venv ${VENV_DIR}"
             }
         }
-    stage('Install Dependencies') {
+        stage('Install Requirements') {
             steps {
-                // Activar el entorno virtual y luego instalar las dependencias
-                sh '''
-                    . venv/bin/activate
+                sh """
+                    . ${VENV_DIR}/bin/activate
                     pip install -r requirements.txt
-                '''
+                """
             }
         }
-    stage('version') {
-      steps {
-        sh '''
-              . venv/bin/activate
-        sh 'python3 --version'
-        '''
-      }
-    }
-    stage('download') {
-      steps {
-        sh 'python3 24-05-07-BD-Descarga-Descomprimir_1.py'
-      }
-    }
-    stage('presidencia') {
-      steps {
-        sh 'python3 presidencia.py'
-      }
-    }
-    stage('publicacion') {
-      steps {
-        sh 'python3 publicacion.py'
-      }
-    }
+        stage('Version Python') {
+            steps {
+                sh """
+                    . ${VENV_DIR}/bin/activate
+                    python --version
+                """
+            }
+          }
+        stage('download') {
+          steps {
+            sh 'python3 24-05-07-BD-Descarga-Descomprimir_1.py'
+          }
+        }
+        stage('presidencia') {
+          steps {
+            sh 'python3 presidencia.py'
+          }
+        }
+        stage('publicacion') {
+          steps {
+            sh 'python3 publicacion.py'
+          }
+        }
     }
   }
