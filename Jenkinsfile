@@ -9,6 +9,13 @@ pipeline {
                 deleteDir()
             }
         }
+        stages {
+        stage('Checkout') {
+            steps {
+                // Clonar el repositorio Git
+                git url: 'https://github.com/ericruizINE/descargaCSV.git', branch: 'main'
+            }
+        }
         stage('Install venv') {
             steps {
                 // Instalar el paquete python3-venv si aún no está instalado
