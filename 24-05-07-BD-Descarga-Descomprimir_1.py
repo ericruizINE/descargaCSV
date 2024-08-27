@@ -12,7 +12,7 @@ import os
 
 url = 'https://prep2024.ine.mx/publicacion/nacional/assets/20240603_2005_PREP.zip'
 nombre_archivo = '20240603_2005_PREP.zip'
-directorio_destino = '/var/jenkins_home/workspace/Descarga CSV/Archivos'  # Carpeta donde se van a extraer los archivos
+directorio_destino = '/var/jenkins_home/workspace/Publicacion/Archivos'  # Carpeta donde se van a extraer los archivos
 ruta_completa = os.path.join(directorio_destino, nombre_archivo)
 
 # Crear la carpeta de destino si no existe
