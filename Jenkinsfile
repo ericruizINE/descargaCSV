@@ -13,11 +13,11 @@ pipeline {
         }
     stage('Install Dependencies') {
             steps {
-                  //pip install -r requirements.txt
-                pip install requests
-                pip install selenium
-                pip install webdriver-manager
-                pip install pandas
+                pip install -r requirements.txt
+                //pip install requests
+                //pip install selenium
+                //pip install webdriver-manager
+                //pip install pandas
             }
         }
     stage('version') {
