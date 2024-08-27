@@ -1,15 +1,14 @@
 pipeline {
-    agent any
-
-    options {
-        // Limpiar el workspace antes de cada ejecución
-        cleanWs()
-    }
-    
+    agent any    
     environment {
         VENV_DIR = '/var/jenkins_home/workspace/Descarga CSV Publicación/venv'
     }
     stages {
+        stage('Clean Up') {
+            steps {
+                deleteDir()
+            }
+        }
         stage('Install venv') {
             steps {
                 // Instalar el paquete python3-venv si aún no está instalado
