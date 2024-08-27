@@ -37,28 +37,37 @@ pipeline {
                 """
             }
         }
-        stage('Run Tests') {
+        stage('Version Python') {
             steps {
                 // Ejecutar tests dentro del entorno virtual
                 sh """
                     . ${VENV_DIR}/bin/activate
-                    python --version
+                    python3 --version
                 """
             }
           }
-        stage('download') {
+        stage('Descarga de CSV') {
           steps {
-            sh 'python3 24-05-07-BD-Descarga-Descomprimir_1.py'
+            sh """
+                    . ${VENV_DIR}/bin/activate
+                    python3 24-05-07-BD-Descarga-Descomprimir_1.py
+               """
           }
         }
-        stage('presidencia') {
+        stage('Validación datos') {
           steps {
-            sh 'python3 presidencia.py'
+            sh """
+                    . ${VENV_DIR}/bin/activate
+                    python3 presidencia.py
+               """
           }
         }
-        stage('publicacion') {
+        stage('Validacion Publicación') {
           steps {
-            sh 'python3 publicacion.py'
+            sh """
+                    . ${VENV_DIR}/bin/activate
+                    python3 publicacion.py
+               """
           }
         }
     }
