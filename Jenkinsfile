@@ -1,30 +1,37 @@
 pipeline {
     agent any
+    environment {
+        VENV_DIR = '/var/jenkins_home/workspace/Descarga CSV Publicación/venv'
+    }
     stages {
-        stage('Install Virtualenv') {
+        stage('Checkout') {
             steps {
-                sh 'sudo pip3 install virtualenv'
+                // Clonar el repositorio Git
+                git url: 'https://your-git-repo-url.git', branch: 'main'
             }
         }
         stage('Setup Virtualenv') {
             steps {
-                sh 'virtualenv venv'
+                // Crear el entorno virtual en el workspace
+                sh "python3 -m venv ${VENV_DIR}"
             }
         }
-        stage('Install Requirements') {
+        stage('Install Dependencies') {
             steps {
-                sh '''
-                    . venv/bin/activate
+                // Activar el entorno virtual e instalar las dependencias
+                sh """
+                    . ${VENV_DIR}/bin/activate
                     pip install -r requirements.txt
-                '''
+                """
             }
         }
         stage('Run Tests') {
             steps {
-                sh '''
-                    . venv/bin/activate
+                // Ejecutar tests dentro del entorno virtual
+                sh """
+                    . ${VENV_DIR}/bin/activate
                     python --version
-                '''
+                """
             }
           }
         stage('download') {
