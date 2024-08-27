@@ -7,18 +7,18 @@ pipeline {
               //cd '/var/jenkins_home/workspace/Descarga CSV/path/to/venv.'
               //source venv/bin/activate
               sh 'python3 -m venv venv'
-              source venv/bin/activate
-              python3 -m pip install --upgrade pip
-              sh pwd
+              sh 'source venv/bin/activate'
+              sh 'python3 -m pip install --upgrade pip'
+              sh 'pwd'
             }
         }
     stage('Install Dependencies') {
             steps {
                 // pip install -r requirements.txt
-                pip install requests
-                pip install selenium
-                pip install webdriver-manager
-                pip install pandas
+                sh 'pip install requests'
+                sh 'pip install selenium'
+                sh 'pip install webdriver-manager'
+                sh 'pip install pandas'
             }
         }
     stage('version') {
