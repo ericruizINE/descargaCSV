@@ -4,7 +4,7 @@ pipeline {
     stage('Setup') {
             steps {
                 // Crear el entorno virtual
-              cd /var/jenkins_home/workspace/Descarga\ CSV/path/to/venv.
+              cd /var/jenkins_home/workspace/Descarga CSV/path/to/venv.
               source venv/bin/activate
               // sh 'python3 -m venv venv'
             }
