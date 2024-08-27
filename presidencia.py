@@ -2,6 +2,12 @@ import pandas as pd
 import numpy as np
 from rich import print
 import re
+import datetime
+
+def registrar_hora():
+    ahora = datetime.datetime.now()
+    hora_formateada = ahora.strftime("%Y-%m-%d %H:%M:%S")
+    print("Hora de ejecución:", hora_formateada)
 
 file_path = '/var/jenkins_home/workspace/Descarga CSV/Archivos/PRES_2024.csv'
 df = pd.read_csv(file_path, skiprows=4, delimiter=',', low_memory=False)  # Cambia ';' por el delimitador correcto
@@ -125,6 +131,10 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     #print(value_counts11)
 
 print("VALIDACION DE CSV DE PRESIDENCIA, REALIZANDO CONTEOS CON LOS DATOS Y VALIDANDO CON EL PRIMER ENCABEZADO")
+
+registrar_hora()
+print("Archivo:", file_path)
+
 print("1.- ACTAS_ESPERADAS:", df1[ACTAS_ESPERADAS].values)
 
 if np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS].values):
