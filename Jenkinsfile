@@ -1,7 +1,7 @@
 pipeline {
     agent any    
     environment {
-        VENV_DIR = '/var/jenkins_home/workspace/Descarga CSV Publicación/venv'
+        VENV_DIR = '/var/jenkins_home/workspace/Publicacion/venv'
     }
     stages {
         stage('Clean Up') {
