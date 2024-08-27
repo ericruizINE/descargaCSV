@@ -8,7 +8,7 @@ pipeline {
               //source venv/bin/activate
               sh 'python3 -m venv venv'
               source venv/bin/activate
-              pwd
+              sh pwd
             }
         }
     stage('Install Dependencies') {
