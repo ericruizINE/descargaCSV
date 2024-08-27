@@ -1,29 +1,28 @@
 pipeline {
     agent any
-    environment {
-        VENV_DIR = 'venv'
-    }
     stages {
+        stage('Install Virtualenv') {
+            steps {
+                sh 'sudo pip3 install virtualenv'
+            }
+        }
         stage('Setup Virtualenv') {
             steps {
-                // Crear el entorno virtual usando venv
-                sh "python3 -m venv ${VENV_DIR}"
+                sh 'virtualenv venv'
             }
         }
         stage('Install Requirements') {
             steps {
-                // Activar el entorno virtual e instalar las dependencias
-                sh """
-                    . ${VENV_DIR}/bin/activate
+                sh '''
+                    . venv/bin/activate
                     pip install -r requirements.txt
-                """
+                '''
             }
         }
         stage('Run Tests') {
             steps {
-                // Ejecutar tests dentro del entorno virtual
-                sh """
-                    . ${VENV_DIR}/bin/activate
+                sh '''
+                    . venv/bin/activate
                     python --version
                 """
             }
