@@ -12,7 +12,7 @@ pipeline {
     stage('Install Dependencies') {
             steps {
                 // Activar el entorno virtual y luego instalar las dependencias
-                sh source venv/bin/activate
+                source venv/bin/activate
                   //pip install -r requirements.txt
                 pip install requests
                 pip install selenium
