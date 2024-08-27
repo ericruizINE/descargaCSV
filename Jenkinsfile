@@ -7,7 +7,8 @@ pipeline {
               //cd '/var/jenkins_home/workspace/Descarga CSV/path/to/venv.'
               //source venv/bin/activate
               sh 'python3 -m venv venv'
-              sh 'source venv/bin/activate'
+              //sh 'source venv/bin/activate'
+              sh '. venv/bin/activate'
               sh 'python3 -m pip install --upgrade pip'
               sh 'pwd'
             }
