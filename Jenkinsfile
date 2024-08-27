@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clonar el repositorio Git
-                git url: 'https://your-git-repo-url.git', branch: 'main'
+                git url: 'https://github.com/ericruizINE/descargaCSV.git', branch: 'main'
             }
         }
         stage('Setup Virtualenv') {
