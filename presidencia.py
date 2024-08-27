@@ -9,7 +9,7 @@ def registrar_hora():
     hora_formateada = ahora.strftime("%Y-%m-%d %H:%M:%S")
     print("Hora de ejecución:", hora_formateada)
 
-file_path = '/var/jenkins_home/workspace/Descarga CSV/Archivos/PRES_2024.csv'
+file_path = '/var/jenkins_home/workspace/Publicacion/Archivos/PRES_2024.csv'
 df = pd.read_csv(file_path, skiprows=4, delimiter=',', low_memory=False)  # Cambia ';' por el delimitador correcto
 df1 = pd.read_csv(file_path, skiprows=3, nrows=1, header=None, names=["ACTAS_ESPERADAS","ACTAS_REGISTRADAS","ACTAS_FUERA_CATALOGO","ACTAS_CAPTURADAS","PORCENTAJE_ACTAS_CAPTURADAS","ACTAS_CONTABILIZADAS","PORCENTAJE_ACTAS_CONTABILIZADAS","PORCENTAJE_ACTAS_INCONSISTENCIAS","ACTAS_NO_CONTABILIZADAS","LISTA_NOMINAL_ACTAS_CONTABILIZADAS","TOTAL_VOTOS_C_CS","TOTAL_VOTOS_S_CS","PORCENTAJE_PARTICIPACION_CIUDADANA"])
 
