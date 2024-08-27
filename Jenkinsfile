@@ -5,6 +5,7 @@ pipeline {
             steps {
                 // Instalar virtualenv si no está instalado
                 //sh 'pip3 install --root virtualenv'
+                sh 'apt install python3.11-venv'
                 // Crear el entorno virtual
                 sh 'python3 -m venv venv'
             }
