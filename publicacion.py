@@ -59,7 +59,8 @@ def capture_element_screenshot(driver, element, file_path):
     print(f'Captura de pantalla del elemento guardada en {file_path}')
 
 # Configurar las opciones de Chrome para el modo headless
-chrome_options = webdriver.ChromeOptions()
+chrome_options = Options()
+chrome_options.binary_location = "/usr/bin/chromium"
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920x1080")  # Tamaño de ventana para las capturas de pantalla
 chrome_options.add_argument("--disable-gpu")  # Recomendado en sistemas Windows
@@ -68,7 +69,7 @@ chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas
 
 # Configurar el controlador de Chrome
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service),options=chrome_options)
+driver = webdriver.Chrome(service=service, options=chrome_options)
 driver.maximize_window()
 
 # URL de la página que deseas validar
