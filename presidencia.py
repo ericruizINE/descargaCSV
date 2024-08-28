@@ -4,12 +4,6 @@ from rich import print
 import re
 import datetime
 
-# Set the desired timezone
-timezone = pytz.timezone('America/Mexico_City')
-
-# Get the current time in the specified timezone
-now = datetime.datetime.now(timezone)
-
 def registrar_hora():
     ahora = datetime.datetime.now()
     hora_formateada = ahora.strftime("%Y-%m-%d %H:%M:%S")
