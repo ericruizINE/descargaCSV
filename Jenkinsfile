@@ -36,7 +36,7 @@ pipeline {
                """
           }
         }
-        stage('Validación calculando datos en CSV') {
+        stage('Validación datos en CSV') {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
