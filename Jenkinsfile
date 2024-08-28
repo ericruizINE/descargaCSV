@@ -48,11 +48,11 @@ pipeline {
           }
         stage('Descarga de CSV') {
           steps {
-            sh """
+            sh """"
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     python3 24-05-07-BD-Descarga-Descomprimir_1.py
                     archiveArtifacts artifacts: 'Archivos/*.zip, Archivos/*.csv, followSymlinks: false
-               """
+               """"
           }
         }
         stage('Validación datos') {
@@ -65,11 +65,11 @@ pipeline {
         }
         stage('Validacion Publicación') {
           steps {
-            sh """
+            sh """"
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     python3 publicacion.py
                     archiveArtifacts artifacts: 'screenshots_publi/*.png', followSymlinks: false
-               """
+               """"
           }
         }
         stage('Show Screenshot URLs') {
