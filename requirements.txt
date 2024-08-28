@@ -6,3 +6,6 @@ webdriver-manager
 rich
 pytz
 pillow
+chromium
+chromium-browser
+chromedriver-py
