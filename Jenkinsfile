@@ -77,6 +77,7 @@ pipeline {
                     def screenshots = sh(script: "ls ${WORKSPACE}/screenshots_publi/*.png", returnStdout: true).trim().split('\n')
                     screenshots.each { screenshot ->
                         echo "Screenshot URL: ${env.BUILD_URL}artifact/${screenshot.split('/').last()}"
+                    }
             }
         }
     }
