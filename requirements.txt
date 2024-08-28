@@ -8,3 +8,5 @@ pytz
 pillow
 chromium
 chromedriver-autoinstaller
+pytest
+allure-pytest
