@@ -68,6 +68,7 @@ chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas
 # Configurar el controlador de Chrome
 chromedriver_autoinstaller.install() 
 driver = webdriver.Chrome(options=chrome_options)
+print("Versión chromedriver:", driver.capabilities['browserVersion'])
 driver.maximize_window()
 
 # URL de la página que deseas validar
