@@ -41,7 +41,7 @@ pipeline {
             steps {
                 // Ejecutar tests dentro del entorno virtual
                 sh """
-                    . ${VENV_DIR}/bin/activate
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1'
                     python3 --version
                 """
             }
@@ -49,7 +49,7 @@ pipeline {
         stage('Descarga de CSV') {
           steps {
             sh """
-                    . ${VENV_DIR}/bin/activate
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1'
                     python3 24-05-07-BD-Descarga-Descomprimir_1.py
                """
           }
@@ -57,7 +57,7 @@ pipeline {
         stage('Validación datos') {
           steps {
             sh """
-                    . ${VENV_DIR}/bin/activate
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1'
                     python3 presidencia.py
                """
           }
@@ -65,7 +65,7 @@ pipeline {
         stage('Validacion Publicación') {
           steps {
             sh """
-                    . ${VENV_DIR}/bin/activate
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1'
                     python3 publicacion.py
                """
           }
