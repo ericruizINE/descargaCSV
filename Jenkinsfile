@@ -15,16 +15,11 @@ pipeline {
                 git url: 'https://github.com/ericruizINE/descargaCSV.git', branch: 'main'
             }
         }
-        stage('Install venv') {
+        stage('Install & Setup venv') {
             steps {
                 // Instalar el paquete python3-venv si aún no está instalado
                 sh 'apt-get update && apt-get install -y python3-venv'
                 sh 'apt-get update && apt-get install -y python3-pip'
-            }
-        }
-        stage('Setup Virtualenv') {
-            steps {
-                // Crear el entorno virtual
                 sh "python3 -m venv ${VENV_DIR}"
             }
         }
@@ -37,16 +32,7 @@ pipeline {
                 """
             }
         }
-        stage('Version Python') {
-            steps {
-                // Ejecutar tests dentro del entorno virtual
-                sh """
-                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    python3 --version
-                """
-            }
-          }
-        stage('Descarga de CSV') {
+        stage('Descarga de Archivos CSV Presidencia') {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
@@ -54,7 +40,7 @@ pipeline {
                """
           }
         }
-        stage('Validación datos') {
+        stage('Validación calculando datos en CSV') {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
@@ -62,7 +48,7 @@ pipeline {
                """
           }
         }
-        stage('Validacion Publicación') {
+        stage('Validacion Publicación - Presidencia') {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
@@ -70,7 +56,7 @@ pipeline {
                """
           }
         }
-        stage('Show Screenshot URLs') {
+        stage('Mostrar Screenshot URLs') {
             steps {
                 script {
                     // Mostrar las URLs de las capturas de pantalla
