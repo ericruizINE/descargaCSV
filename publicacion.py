@@ -4,9 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import NoSuchElementException
+import chromedriver_autoinstaller
 import time
 import re
 import os
@@ -33,7 +32,7 @@ def capture_full_page_screenshot(driver, file_path):
 
     # Tomar la captura de pantalla
     driver.save_screenshot(file_path)
-    print(f'Captura de pantalla completa guardada en {file_path}')
+    #print(f'Captura de pantalla completa guardada en {file_path}')
 
 def capture_element_screenshot(driver, element, file_path):
     """Captura una captura de pantalla de un elemento específico, manejando el desplazamiento."""
@@ -56,7 +55,7 @@ def capture_element_screenshot(driver, element, file_path):
     image.save(file_path)
     if os.path.exists(screenshot_path):
             os.remove(screenshot_path)  # Eliminar el archivo temporal
-    print(f'Captura de pantalla del elemento guardada en {file_path}')
+    #print(f'Captura de pantalla del elemento guardada en {file_path}')
 
 # Configurar las opciones de Chrome para el modo headless
 chrome_options = webdriver.ChromeOptions()
@@ -67,7 +66,8 @@ chrome_options.add_argument("--no-sandbox")  # Requerido para algunas distribuci
 chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas distribuciones de Linux
 
 # Configurar el controlador de Chrome
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+chromedriver_autoinstaller.install() 
+driver = webdriver.Chrome(options=chrome_options)
 driver.maximize_window()
 
 # URL de la página que deseas validar
