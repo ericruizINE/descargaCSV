@@ -76,7 +76,7 @@ pipeline {
                     // Mostrar las URLs de las capturas de pantalla
                     def screenshots = sh(script: "ls ${WORKSPACE}/screenshots_publi/*.png", returnStdout: true).trim().split('\n')
                     screenshots.each { screenshot ->
-                        echo "Screenshot URL: ${env.BUILD_URL}artifact/${screenshot.split('/').last()}"
+                        echo "Screenshot URL: ${env.BUILD_URL}execution/node/3/ws/screenshots_publi/${screenshot.split('/').last()}"
                     }
             }
         }
