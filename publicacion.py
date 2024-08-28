@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import NoSuchElementException
 import time
 import re
@@ -66,7 +67,8 @@ chrome_options.add_argument("--no-sandbox")  # Requerido para algunas distribuci
 chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas distribuciones de Linux
 
 # Configurar el controlador de Chrome
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service)(ChromeDriverManager().install()), options=chrome_options)
 driver.maximize_window()
 
 # URL de la página que deseas validar
