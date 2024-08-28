@@ -68,7 +68,7 @@ chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas
 
 # Configurar el controlador de Chrome
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)(ChromeDriverManager().install()), options=chrome_options)
+driver = webdriver.Chrome(service=service),options=chrome_options)
 driver.maximize_window()
 
 # URL de la página que deseas validar
