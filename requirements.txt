@@ -2,7 +2,7 @@ requests
 pandas
 numpy
 selenium
-webdriver-manager
+webdriver_manager
 rich
 pytz
 pillow
