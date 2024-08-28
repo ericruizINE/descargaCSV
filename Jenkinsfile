@@ -4,13 +4,9 @@ pipeline {
         VENV_DIR = '/var/jenkins_home/workspace/Publicacion/venv'
     }
     stages {
-        stage('Clean Up') {
+        stage('Clean Up and Checkout ') {
             steps {
                 deleteDir()
-            }
-        }
-        stage('Checkout') {
-            steps {
                 // Clonar el repositorio Git
                 git url: 'https://github.com/ericruizINE/descargaCSV.git', branch: 'main'
             }
