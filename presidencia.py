@@ -240,7 +240,7 @@ else:
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
 @allure.story('Validación de Porcentaje de Actas Capturadas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
-def test_actas_capturadas_coinciden():
+def test_actas_porcentaje_capturadas_coinciden():
     """
     Prueba que los valores de PORCENTAJE_ACTAS_CAPTURADAS coincidan con los valores esperados.
     """
@@ -270,7 +270,7 @@ else:
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
 @allure.story('Validación de Actas Contabilizadas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
-def test_actas_capturadas_coinciden():
+def test_actas_contabilizadas_coinciden():
     """
     Prueba que los valores de ACTAS_CONTABILIZADAS coincidan con los valores esperados.
     """
