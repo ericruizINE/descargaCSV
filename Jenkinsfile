@@ -62,11 +62,11 @@ pipeline {
                     }
             }
         }
-        stage('Ejecutar Pruebas') {
+        stage('Ejecutar Pytest') {
             steps {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest --alluredir=report
+                    pytest presidencia.py --alluredir=report
                """
             }
         }
