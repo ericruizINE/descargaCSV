@@ -132,6 +132,7 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     value_counts11 = [value_counts11]
     actas_regis = df1[ACTAS_REGISTRADAS].values
     actas_fuera = df1[ACTAS_FUERA_CATALOGO].values
+    actas_cap = df1[ACTAS_CAPTURADAS].values
     #print(value_counts11)
 
 print("VALIDACION DE CSV DE PRESIDENCIA, REALIZANDO CONTEOS CON LOS DATOS Y VALIDANDO CON EL PRIMER ENCABEZADO")
@@ -200,10 +201,34 @@ def test_actas_fuera_catalogo_coinciden():
             "Los valores no coinciden. Revisa el reporte para más detalles."
         )
 
-if np.array_equal(value_counts4, df1[ACTAS_CAPTURADAS].values):
-    print("[green]4.- Los valores de ACTAS_CAPTURADAS coinciden:[/green]", df1[ACTAS_CAPTURADAS].values)
+if np.array_equal(value_counts4, actas_cap):
+    print("[green]4.- Los valores de ACTAS_CAPTURADAS coinciden:[/green]", actas_cap)
 else:
-    print("[red]4.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", df1[ACTAS_CAPTURADAS].values, "vs", value_counts4)
+    print("[red]4.- Los valores de ACTAS_CAPTURADAS no coinciden.[/red]", actas_cap, "vs", value_counts4)
+
+@allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
+@allure.story('Validación de Actas Capturadas')  # Usa etiquetas estándar de Allure
+@allure.tag('prioridad:alta', 'tipo:funcional')
+def test_actas_capturadas_coinciden():
+    """
+    Prueba que los valores de ACTAS_CAPTURADAS coincidan con los valores esperados.
+    """
+    with allure.step("Comparando los valores de ACTAS_CAPTURADAS con los esperados"):
+        if np.array_equal(value_counts4, actas_cap):
+            allure.attach(
+                f"4.- Los valores de ACTAS_CAPTURADAS coinciden: {actas_cap}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        else:
+            allure.attach(
+                f"4.- Los valores de ACTAS_CAPTURADAS no coinciden. {actas_cap} vs {value_counts4}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        assert np.array_equal(value_counts4, actas_cap), (
+            "Los valores no coinciden. Revisa el reporte para más detalles."
+        )
 
 if np.array_equal(value_counts5, df1[PORCENTAJE_ACTAS_CAPTURADAS].values):
     print("[green]5.- Los valores de PORCENTAJE_ACTAS_CAPTURADAS coinciden:[/green]", df1[PORCENTAJE_ACTAS_CAPTURADAS].values)
