@@ -65,7 +65,7 @@ pipeline {
                     // Mostrar las URLs de los archivos
                     def files = sh(script: "ls ${WORKSPACE}/Archivos/*.csv", returnStdout: true).trim().split('\n')
                     files.each { file ->
-                        echo "Files URL: ${env.BUILD_URL}execution/node/3/ws/Archivos/${screenshot.split('/').last()}"
+                        echo "Files URL: ${env.BUILD_URL}execution/node/3/ws/Archivos/${file.split('/').last()}"
                                      }
                     }
             }
