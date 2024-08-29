@@ -146,7 +146,9 @@ if np.array_equal(value_counts3, actas_regis):
 else:
     print("[red]2.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", actas_regis, "vs", value_counts3)
 
-@allure.feature('Validación de Actas Registradas')  # Usa etiquetas estándar de Allure
+@allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
+@allure.story('Validación de Actas Registradas')  # Usa etiquetas estándar de Allure
+@allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_registradas_coinciden():
     """
     Prueba que los valores de ACTAS_REGISTRADAS coincidan con los valores esperados.
@@ -174,7 +176,9 @@ else:
     print("[red]3.- Los valores de ACTAS_FUERA_CATALOGO no coinciden.[/red]", actas_fuera)
     print(value_counts1)
 
-@allure.feature('Validación de Actas Fuera de Catálogo')  # Usa etiquetas estándar de Allure
+@allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
+@allure.story('Validación de Actas Fuera de Catálogo')  # Usa etiquetas estándar de Allure
+@allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_fuera_catalogo_coinciden():
     """
     Prueba que los valores de ACTAS_FUERA_CATALOGO coincidan con los valores esperados.
