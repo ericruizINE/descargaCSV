@@ -146,7 +146,7 @@ if np.array_equal(value_counts3, actas_regis):
 else:
     print("[red]2.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", actas_regis, "vs", value_counts3)
 
-@allure.feature('Validación y conteo de Actas Registradas')  # Usa etiquetas estándar de Allure
+@allure.feature('Validación de Actas Registradas')  # Usa etiquetas estándar de Allure
 def test_actas_registradas_coinciden():
     """
     Prueba que los valores de ACTAS_REGISTRADAS coincidan con los valores esperados.
@@ -174,7 +174,7 @@ else:
     print("[red]3.- Los valores de ACTAS_FUERA_CATALOGO no coinciden.[/red]", actas_fuera)
     print(value_counts1)
 
-@allure.feature('Validación y conteo de Actas Fuera de Catálogo')  # Usa etiquetas estándar de Allure
+@allure.feature('Validación de Actas Fuera de Catálogo')  # Usa etiquetas estándar de Allure
 def test_actas_fuera_catalogo_coinciden():
     """
     Prueba que los valores de ACTAS_FUERA_CATALOGO coincidan con los valores esperados.
@@ -182,13 +182,13 @@ def test_actas_fuera_catalogo_coinciden():
     with allure.step("Comparando los valores de ACTAS_FUERA_CATALOGO con los esperados"):
         if np.array_equal(value_counts1, actas_fuera):
             allure.attach(
-                f"2.- Los valores de ACTAS_FUERA_CATALOGO coinciden: {actas_fuera}",
+                f"3.- Los valores de ACTAS_FUERA_CATALOGO coinciden: {actas_fuera}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
         else:
             allure.attach(
-                f"2.- Los valores de ACTAS_FUERA_CATALOGO no coinciden. {actas_fuera} vs {value_counts1}",
+                f"3.- Los valores de ACTAS_FUERA_CATALOGO no coinciden. {actas_fuera} vs {value_counts1}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
