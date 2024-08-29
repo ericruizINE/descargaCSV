@@ -62,6 +62,24 @@ pipeline {
                     }
             }
         }
+        stage('Ejecutar Pruebas') {
+            steps {
+                sh """
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
+                    pytest --alluredir=report
+               """
+            }
+        }
+        stage('Publicar Reporte Allure') {
+            steps {
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'report']]
+                ])
+            }
+        }
     }
   }
 }
