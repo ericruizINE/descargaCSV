@@ -135,6 +135,7 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     actas_cap = df1[ACTAS_CAPTURADAS].values
     actas_cap_por = df1[PORCENTAJE_ACTAS_CAPTURADAS].values
     actas_con = df1[ACTAS_CONTABILIZADAS].values
+    actas_con_por = df1[PORCENTAJE_ACTAS_CONTABILIZADAS].values
     #print(value_counts11)
 
 print("VALIDACION DE CSV DE PRESIDENCIA, REALIZANDO CONTEOS CON LOS DATOS Y VALIDANDO CON EL PRIMER ENCABEZADO")
@@ -150,7 +151,7 @@ else:
     print("[red]2.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", actas_regis, "vs", value_counts3)
 
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
-@allure.story('Validación de Actas Registradas')  # Usa etiquetas estándar de Allure
+@allure.story('2.- Validación de Actas Registradas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_registradas_coinciden():
     """
@@ -180,7 +181,7 @@ else:
     print(value_counts1)
 
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
-@allure.story('Validación de Actas Fuera de Catálogo')  # Usa etiquetas estándar de Allure
+@allure.story('3.- Validación de Actas Fuera de Catálogo')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_fuera_catalogo_coinciden():
     """
@@ -209,7 +210,7 @@ else:
     print("[red]4.- Los valores de ACTAS_CAPTURADAS no coinciden.[/red]", actas_cap, "vs", value_counts4)
 
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
-@allure.story('Validación de Actas Capturadas')  # Usa etiquetas estándar de Allure
+@allure.story('4.- Validación de Actas Capturadas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_capturadas_coinciden():
     """
@@ -238,7 +239,7 @@ else:
     print("[red]5.- Los valores de PORCENTAJE_ACTAS_CAPTURADAS no coinciden.[/red]", actas_cap_por, "vs", value_counts5)
 
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
-@allure.story('Validación de Porcentaje de Actas Capturadas')  # Usa etiquetas estándar de Allure
+@allure.story('5.- Validación de Porcentaje de Actas Capturadas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_porcentaje_capturadas_coinciden():
     """
@@ -268,7 +269,7 @@ else:
     print(value_counts)
 
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
-@allure.story('Validación de Actas Contabilizadas')  # Usa etiquetas estándar de Allure
+@allure.story('6.- Validación de Actas Contabilizadas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_contabilizadas_coinciden():
     """
@@ -291,11 +292,35 @@ def test_actas_contabilizadas_coinciden():
             "Los valores no coinciden. Revisa el reporte para más detalles."
         )
 
-if np.array_equal(value_counts6, df1[PORCENTAJE_ACTAS_CONTABILIZADAS].values):
-    print("[green]7.- Los valores de PORCENTAJE_ACTAS_CONTABILIZADAS coinciden:[/green]", df1[PORCENTAJE_ACTAS_CONTABILIZADAS].values)
+if np.array_equal(value_counts6, actas_con_por):
+    print("[green]7.- Los valores de PORCENTAJE_ACTAS_CONTABILIZADAS coinciden:[/green]", actas_con_por)
 else:
-    print("[red]7.- Los valores de PORCENTAJE_ACTAS_CONTABILIZADAS no coinciden.[/red]", df1[PORCENTAJE_ACTAS_CONTABILIZADAS].values)
+    print("[red]7.- Los valores de PORCENTAJE_ACTAS_CONTABILIZADAS no coinciden.[/red]", actas_con_por)
     print(value_counts6)
+
+@allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
+@allure.story('7.- Validación de Porcentaje de Actas Contabilizadas')  # Usa etiquetas estándar de Allure
+@allure.tag('prioridad:alta', 'tipo:funcional')
+def test_actas_porcentaje_contabilizadas_coinciden():
+    """
+    Prueba que los valores de PORCENTAJE_ACTAS_CONTABILIZADAS coincidan con los valores esperados.
+    """
+    with allure.step("Comparando los valores de PORCENTAJE_ACTAS_CONTABILIZADAS con los esperados"):
+        if np.array_equal(value_counts6, actas_con_por):
+            allure.attach(
+                f"7.- Los valores de PORCENTAJE_ACTAS_CONTABILIZADAS coinciden: {actas_con_por}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        else:
+            allure.attach(
+                f"7.- Los valores de PORCENTAJE_ACTAS_CONTABILIZADAS no coinciden. {actas_con_por} vs {value_counts6}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        assert np.array_equal(value_counts6, actas_con_por), (
+            "Los valores no coinciden. Revisa el reporte para más detalles."
+        )
 
 if np.array_equal(value_counts7, df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].values):
     print("[green]8.- Los valores de PORCENTAJE_ACTAS_INCONSISTENCIAS coinciden:[/green]", df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].values)
