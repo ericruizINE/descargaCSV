@@ -493,13 +493,13 @@ def test_porcentaje_participacion_ciudadana_coinciden():
     with allure.step("Comparando los valores de PORCENTAJE_PARTICIPACION_CIUDADANA con los esperados"):
         if np.array_equal(value_counts9, participacionciu):
             allure.attach(
-                f"6.- Los valores de PORCENTAJE_PARTICIPACION_CIUDADANA coinciden: {participacionciu}",
+                f"13.- Los valores de PORCENTAJE_PARTICIPACION_CIUDADANA coinciden: {participacionciu}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
         else:
             allure.attach(
-                f"6.- Los valores de PORCENTAJE_PARTICIPACION_CIUDADANA no coinciden. {participacionciu} vs {value_counts9}",
+                f"13.- Los valores de PORCENTAJE_PARTICIPACION_CIUDADANA no coinciden. {participacionciu} vs {value_counts9}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )

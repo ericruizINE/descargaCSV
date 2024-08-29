@@ -75,6 +75,7 @@ pipeline {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest presidencia.py --alluredir=report
+                    pytest publicacion.py --alluredir=report
                """
             }
         }
