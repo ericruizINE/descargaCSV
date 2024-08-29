@@ -207,12 +207,24 @@ else:
     print("[red]13.- Los valores de PORCENTAJE_PARTICIPACION_CIUDADANA no coinciden.[/red]", df1[PORCENTAJE_PARTICIPACION_CIUDADANA].values)
     print(value_counts9)
 
-@pytest.mark.allure_label('feature', 'Validaciones de Actas Registradas')
+@allure.feature('Validaciones de Actas Registradas')  # Usa etiquetas estándar de Allure
 def test_actas_registradas_coinciden():
     """
     Prueba que los valores de ACTAS_REGISTRADAS coincidan con los valores esperados.
     """
-    assert np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS]), (
-        f"Los valores de ACTAS_REGISTRADAS no coinciden: "
-        f"{df1[ACTAS_REGISTRADAS]} vs {value_counts3}"
-    )
+    with allure.step("Comparando los valores de ACTAS_REGISTRADAS con los esperados"):
+        if np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS]):
+            allure.attach(
+                f"2.- Los valores de ACTAS_REGISTRADAS coinciden: {df1[ACTAS_REGISTRADAS]}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        else:
+            allure.attach(
+                f"2.- Los valores de ACTAS_REGISTRADAS no coinciden. {df1[ACTAS_REGISTRADAS]} vs {value_counts3}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        assert np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS]), (
+            "Los valores no coinciden. Revisa el reporte para más detalles."
+        )
