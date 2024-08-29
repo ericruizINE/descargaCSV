@@ -130,6 +130,7 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     value_counts10 = [value_counts10]
     value_counts11 = df_filtrado9[TOTAL_VOTOS_CALCULADO].sum()
     value_counts11 = [value_counts11]
+    actas_regis = df1[ACTAS_REGISTRADAS].values
     #print(value_counts11)
 
 print("VALIDACION DE CSV DE PRESIDENCIA, REALIZANDO CONTEOS CON LOS DATOS Y VALIDANDO CON EL PRIMER ENCABEZADO")
@@ -139,10 +140,32 @@ print("Archivo:", file_path)
 
 print("1.- ACTAS_ESPERADAS:", df1[ACTAS_ESPERADAS].values)
 
-if np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS].values):
-    print("[green]2.- Los valores de ACTAS_REGISTRADAS coinciden:[/green]", df1[ACTAS_REGISTRADAS].values)
+if np.array_equal(value_counts3, actas_regis):
+    print("[green]2.- Los valores de ACTAS_REGISTRADAS coinciden:[/green]", actas_regis)
 else:
-    print("[red]2.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", df1[ACTAS_REGISTRADAS].values, "vs", value_counts3)
+    print("[red]2.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", actas_regis, "vs", value_counts3)
+
+@allure.feature('Validaciones de Actas Registradas')  # Usa etiquetas estándar de Allure
+def test_actas_registradas_coinciden():
+    """
+    Prueba que los valores de ACTAS_REGISTRADAS coincidan con los valores esperados.
+    """
+    with allure.step("Comparando los valores de ACTAS_REGISTRADAS con los esperados"):
+        if np.array_equal(value_counts3, actas_regis):
+            allure.attach(
+                f"2.- Los valores de ACTAS_REGISTRADAS coinciden: {actas_regis}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        else:
+            allure.attach(
+                f"2.- Los valores de ACTAS_REGISTRADAS no coinciden. {actas_regis} vs {value_counts3}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+        assert np.array_equal(value_counts3, actas_regis), (
+            "Los valores no coinciden. Revisa el reporte para más detalles."
+        )
 
 if np.array_equal(value_counts1, df1[ACTAS_FUERA_CATALOGO].values):
     print("[green]3.- Los valores de ACTAS_FUERA_CATALOGO coinciden:[/green]", df1[ACTAS_FUERA_CATALOGO].values)
@@ -206,25 +229,3 @@ if np.array_equal(value_counts9, df1[PORCENTAJE_PARTICIPACION_CIUDADANA].values)
 else:
     print("[red]13.- Los valores de PORCENTAJE_PARTICIPACION_CIUDADANA no coinciden.[/red]", df1[PORCENTAJE_PARTICIPACION_CIUDADANA].values)
     print(value_counts9)
-
-@allure.feature('Validaciones de Actas Registradas')  # Usa etiquetas estándar de Allure
-def test_actas_registradas_coinciden():
-    """
-    Prueba que los valores de ACTAS_REGISTRADAS coincidan con los valores esperados.
-    """
-    with allure.step("Comparando los valores de ACTAS_REGISTRADAS con los esperados"):
-        if np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS]):
-            allure.attach(
-                f"2.- Los valores de ACTAS_REGISTRADAS coinciden: {df1[ACTAS_REGISTRADAS]}",
-                name="Resultado de la validación",
-                attachment_type=allure.attachment_type.TEXT
-            )
-        else:
-            allure.attach(
-                f"2.- Los valores de ACTAS_REGISTRADAS no coinciden. {df1[ACTAS_REGISTRADAS]} vs {value_counts3}",
-                name="Resultado de la validación",
-                attachment_type=allure.attachment_type.TEXT
-            )
-        assert np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS]), (
-            "Los valores no coinciden. Revisa el reporte para más detalles."
-        )
