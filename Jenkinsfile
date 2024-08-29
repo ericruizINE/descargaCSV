@@ -44,14 +44,14 @@ pipeline {
                """
           }
         }
-        stage('Validacion Publicación - Presidencia') {
-          steps {
-            sh """
-                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    //python3 publicacion.py
-               """
-          }
-        }
+        //stage('Validacion Publicación - Presidencia') {
+          //steps {
+            //sh """
+                    //. ${VENV_DIR}/bin/activate > /dev/null 2>&1
+                   // python3 publicacion.py
+              // """
+          //}
+        //}
         stage('Mostrar Screenshot URLs') {
             steps {
                 //script {
@@ -59,7 +59,7 @@ pipeline {
                     //def screenshots = sh(script: "ls ${WORKSPACE}/screenshots_publi/*.png", returnStdout: true).trim().split('\n')
                     //screenshots.each { screenshot ->
                         //echo "Screenshot URL: ${env.BUILD_URL}execution/node/3/ws/screenshots_publi/${screenshot.split('/').last()}"
-                                    // }
+                                     //}
                     //}
                 script {
                     // Mostrar las URLs de los archivos
