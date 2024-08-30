@@ -84,27 +84,22 @@ TOTAL_VOTOS_C_CS = 'TOTAL_VOTOS_C_CS'
 TOTAL_VOTOS_S_CS = 'TOTAL_VOTOS_S_CS'
 PORCENTAJE_PARTICIPACION_CIUDADANA = 'PORCENTAJE_PARTICIPACION_CIUDADANA'
 
-# Configurar las opciones de Chrome para el modo headless
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--window-size=1920x1080")  # Tamaño de ventana para las capturas de pantalla
-chrome_options.add_argument("--disable-gpu")  # Recomendado en sistemas Windows
-chrome_options.add_argument("--no-sandbox")  # Requerido para algunas distribuciones de Linux
-chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas distribuciones de Linux
-
-
 @pytest.fixture
 def setup():
     # Configurar el controlador de Chrome
     chromedriver_autoinstaller.install() 
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--window-size=1920x1080")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Chrome(options=chrome_options)
     print("Versión chromedriver:", driver.capabilities['browserVersion'])
     driver.maximize_window()
 
     # URL de la página que deseas validar
     url = 'https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura'
-
-    # Navegar a la página web
     driver.get(url)
 
     # Espera a que la página cargue completamente
@@ -114,17 +109,24 @@ def setup():
     
     driver.quit()  # Asegúrate de cerrar el navegador después de la prueba
 
-# Aquí puedes cargar tu DataFrame y comparar
-valor_con_comas = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_CAPTURADAS].astype(int).values)))
-valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERADAS].astype(int).values)))
-valor_con_comas3 = "{:,.0f}".format(int("".join(str(x) for x in df[TOTAL_VOTOS_C_CS].astype(int).values)))
-#print("Valor encontrado en dataframe:", valor_con_comas)
+@pytest.fixture
+def df():
+    # Cargar tu DataFrame aquí
+    # Por ejemplo:
+    import pandas as pd
+    data = {'ACTAS_ESPERADAS': [1000]}  # Sustituir con tus datos reales
+    return pd.DataFrame(data)
+
+@pytest.fixture
+def screenshots_folder():
+    # Define la ruta de la carpeta donde almacenarás las capturas de pantalla
+    return "/ruta/a/tu/carpeta/screenshots"
 
 @allure.feature('Validación de datos en sitio de Publicación - 2')
 @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_folder):
-    valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERADAS].astype(int).values)))
+    valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_ESPERADAS'].astype(int).values)))
 
     driver = setup
     elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
