@@ -174,12 +174,15 @@ try:
                     name="Resultado de la validación",
                     attachment_type=allure.attachment_type.TEXT
                 )
+                allure.attach(capture_element_screenshot(driver, elemento3, file_path), name="screenshot", attachment_type=allure.attachment_type.PNG)
             else:
                 allure.attach(
                     f"2.- Los valores de actas esperadas en Estadística Nacional no coinciden. {valor_con_comas2} vs {valor_en_pagina3}",
                     name="Resultado de la validación",
                     attachment_type=allure.attachment_type.TEXT
                 )
+                allure.attach(capture_element_screenshot(driver, elemento3, file_path), name="screenshot", attachment_type=allure.attachment_type.PNG)
+                
             assert valor_en_pagina3 == valor_con_comas2, (
                 "Los valores no coinciden. Revisa el reporte para más detalles."
             )
