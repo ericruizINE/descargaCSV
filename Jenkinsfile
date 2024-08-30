@@ -63,6 +63,7 @@ pipeline {
                     pytest presidencia.py --alluredir=report
                     pytest publicacion.py --alluredir=report
                     pytest pytestpubli.py --alluredir=report
+                    pytest pytestpublicsv.py --alluredir=report
                """
             }
         }
