@@ -17,8 +17,15 @@ pipeline {
                 sh 'apt-get update && apt-get install -y python3-venv'
                 sh 'apt-get update && apt-get install -y python3-pip'
                 sh "python3 -m venv ${VENV_DIR}"
-                sh ". ${VENV_DIR}/bin/activate"
-                sh 'pip install --no-cache-dir -r requirements.txt'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                // Activar el entorno virtual e instalar las dependencias
+                sh """
+                    . ${VENV_DIR}/bin/activate
+                    pip install --no-cache-dir -r requirements.txt
+                """
             }
         }
         stage('Descarga de Archivos CSV Presidencia') {
