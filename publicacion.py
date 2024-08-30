@@ -156,10 +156,6 @@ try:
     else:
         print("1.- El número de actas esperadas en Estadística Nacional no coincide con el CSV.",valor_con_comas2)  
 
-    @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
-    @allure.story('13.- Validación de Porcentaje de Participación Ciudadana')  # Usa etiquetas estándar de Allure
-    @allure.tag('prioridad:alta', 'tipo:funcional')
-
     @allure.feature('Validación de datos en sitio de Publicación')  # Usa etiquetas estándar de Allure
     @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')  # Usa etiquetas estándar de Allure
     @allure.tag('prioridad:alta', 'tipo:funcional')
@@ -167,16 +163,16 @@ try:
         """
         Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
         """
-        with allure.step("Comparando los valores de actas esperadas en Estadística Nacional con los esperados"):
+        with allure.step("Comparando los valores de actas esperadas en Estadística Nacional coinciden con los esperados"):
             if valor_en_pagina3 == valor_con_comas2:
                 allure.attach(
-                    f"2.- Los valores de actas esperadas en Estadística Nacional coinciden: {valor_con_comas2}",
+                    f"1.- Los valores coinciden: {valor_en_pagina3} CSV: {valor_con_comas2}",
                     name="Resultado de la validación",
                     attachment_type=allure.attachment_type.TEXT
                 )
             else:
                 allure.attach(
-                    f"2.- Los valores de actas esperadas en Estadística Nacional no coinciden. {valor_con_comas2} vs {valor_en_pagina3}",
+                    f"1.- Los valores no coinciden: {valor_en_pagina3} CSV: {valor_con_comas2}",
                     name="Resultado de la validación",
                     attachment_type=allure.attachment_type.TEXT
                 )
@@ -188,6 +184,31 @@ try:
         print("4.- El número de actas capturadas en Avance Nacional coincide con el CSV.",valor_con_comas)
     else:
         print("4.- El número de actas capturadas en Avance Nacional no coincide con el CSV.",valor_con_comas)  
+
+    @allure.feature('Validación de datos en sitio de Publicación')  # Usa etiquetas estándar de Allure
+    @allure.story('2.- Validación de número de actas capturadas en Avance Nacional')  # Usa etiquetas estándar de Allure
+    @allure.tag('prioridad:alta', 'tipo:funcional')
+    def test_actas_capturadas_avance_nacional_coinciden():
+        """
+        Prueba que los valores de actas capturadas en Avance Nacional coincidan con los valores del CSV.
+        """
+        with allure.step("Comparando los valores de actas capturadas en Avance Nacional coinciden con los esperados"):
+            if valor_en_pagina == valor_con_comas:
+                allure.attach(
+                    f"2.- Los valores coinciden: {valor_en_pagina} CSV: {valor_con_comas} ",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            else:
+                allure.attach(
+                    f"2.- Los valores no coinciden. {valor_en_pagina} CSV: {valor_con_comas}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            assert valor_en_pagina == valor_con_comas, (
+                "Los valores no coinciden. Revisa el reporte para más detalles."
+            )
+
     if valor_en_pagina2 == valor_con_comas:
         print("4.- El número de actas capturadas en Estadística Nacional coincide con el CSV.",valor_con_comas)
     else:
