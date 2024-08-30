@@ -215,15 +215,87 @@ try:
     else:
         print("4.- El número de actas capturadas en Estadística Nacional no coincide con el CSV.",valor_con_comas)  
     
+    @allure.feature('Validación de datos en sitio de Publicación')  # Usa etiquetas estándar de Allure
+    @allure.story('3.- Validación de número de actas capturadas en Estadística Nacional')  # Usa etiquetas estándar de Allure
+    @allure.tag('prioridad:alta', 'tipo:funcional')
+    def test_actas_capturadas_estadistica_nacional_coinciden():
+        """
+        Prueba que los valores de actas capturadas en Estadística Nacional coincidan con los valores del CSV.
+        """
+        with allure.step("Comparando los valores de sitio vs csv"):
+            if valor_en_pagina2 == valor_con_comas:
+                allure.attach(
+                    f"3.- Los valores coinciden, Sitio: {valor_en_pagina2} CSV: {valor_con_comas} ",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            else:
+                allure.attach(
+                    f"3.- Los valores no coinciden, Sitio: {valor_en_pagina2} CSV: {valor_con_comas}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            assert valor_en_pagina2 == valor_con_comas, (
+                "Los valores no coinciden. Revisa el reporte para más detalles."
+            )
 
     if valor_en_pagina4 == valor_con_comas3:
         print("11.- El total de votos coincide con el CSV.",valor_con_comas3)
     else:
-        print("11.- El total de votos no coincide con el CSV.",valor_con_comas3)  
+        print("11.- El total de votos no coincide con el CSV.",valor_con_comas3) 
+
+    @allure.feature('Validación de datos en sitio de Publicación')  # Usa etiquetas estándar de Allure
+    @allure.story('3.- Validación de total de votos')  # Usa etiquetas estándar de Allure
+    @allure.tag('prioridad:alta', 'tipo:funcional')
+    def test_total_votos_coinciden():
+        """
+        Prueba que los valores de total de votosl coincidan con los valores del CSV.
+        """
+        with allure.step("Comparando los valores de sitio vs csv"):
+            if valor_en_pagina4 == valor_con_comas3:
+                allure.attach(
+                    f"3.- Los valores coinciden, Sitio: {valor_en_pagina4} CSV: {valor_con_comas3} ",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            else:
+                allure.attach(
+                    f"3.- Los valores no coinciden, Sitio: {valor_en_pagina4} CSV: {valor_con_comas3}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            assert valor_en_pagina4 == valor_con_comas3, (
+                "Los valores no coinciden. Revisa el reporte para más detalles."
+            )
+
     if valor_en_pagina5 == valor_con_comas3:
         print("11.- El total de votos en Fórmula coincide con el CSV.",valor_con_comas3)
     else:
         print("11.- El total de votos en Fórmula no coincide con el CSV.",valor_con_comas3)  
+
+    @allure.feature('Validación de datos en sitio de Publicación')  # Usa etiquetas estándar de Allure
+    @allure.story('3.- Validación de total de votos 2')  # Usa etiquetas estándar de Allure
+    @allure.tag('prioridad:alta', 'tipo:funcional')
+    def test_total_votos2_coinciden():
+        """
+        Prueba que los valores de total de votosl coincidan con los valores del CSV.
+        """
+        with allure.step("Comparando los valores de sitio vs csv"):
+            if valor_en_pagina5 == valor_con_comas3:
+                allure.attach(
+                    f"3.- Los valores coinciden, Sitio: {valor_en_pagina5} CSV: {valor_con_comas3} ",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            else:
+                allure.attach(
+                    f"3.- Los valores no coinciden, Sitio: {valor_en_pagina5} CSV: {valor_con_comas3}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            assert valor_en_pagina5 == valor_con_comas3, (
+                "Los valores no coinciden. Revisa el reporte para más detalles."
+            )
 
 except Exception as e:
     print("Elemento no encontrado:", e)
