@@ -167,7 +167,12 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_f
                     name="Captura de pantalla del error",
                     attachment_type=allure.attachment_type.PNG
                 )
-
+            with open(file_path2, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla completa",
+                    attachment_type=allure.attachment_type.PNG
+                )
         assert valor_en_pagina3 == valor_con_comas2, (
             "Los valores no coinciden. Revisa el reporte para más detalles."
         )
