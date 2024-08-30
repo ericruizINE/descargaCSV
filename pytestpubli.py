@@ -123,6 +123,15 @@ valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERAD
 valor_con_comas3 = "{:,.0f}".format(int("".join(str(x) for x in df[TOTAL_VOTOS_C_CS].astype(int).values)))
 #print("Valor encontrado en dataframe:", valor_con_comas)
 
+@pytest.fixture
+def valor_con_comas2(df):
+    return "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERADAS].astype(int).values)))
+
+@pytest.fixture
+def screenshots_folder():
+    # Define la ruta de la carpeta donde almacenarás las capturas de pantalla
+    return "screenshots_publi"
+
 @allure.feature('Validación de datos en sitio de Publicación - 2')
 @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
 @allure.tag('prioridad:alta', 'tipo:funcional')
