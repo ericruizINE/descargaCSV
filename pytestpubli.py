@@ -113,7 +113,6 @@ def setup():
     yield driver
     driver.quit()
 
-try:
     driver = setup
     elemento = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
     valor_en_pagina = elemento.text
@@ -247,5 +246,5 @@ try:
     else:
         print("11.- El total de votos en Fórmula no coincide con el CSV.",valor_con_comas3)  
 
-except Exception as e:
-    print("Elemento no encontrado:", e)
+    # Cerrar el navegador
+    driver.quit()
