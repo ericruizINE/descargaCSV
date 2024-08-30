@@ -112,7 +112,10 @@ def setup():
 
     file_path = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
     capture_full_page_screenshot(driver, file_path)
-
+    
+    yield driver  # Retorna el driver para usarlo en las pruebas
+    
+    driver.quit()  # Asegúrate de cerrar el navegador después de la prueba
 
 # Aquí puedes cargar tu DataFrame y comparar
 valor_con_comas = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_CAPTURADAS].astype(int).values)))
@@ -120,7 +123,7 @@ valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERAD
 valor_con_comas3 = "{:,.0f}".format(int("".join(str(x) for x in df[TOTAL_VOTOS_C_CS].astype(int).values)))
 #print("Valor encontrado en dataframe:", valor_con_comas)
 
-@allure.feature('Validación de datos en sitio de Publicación')
+@allure.feature('Validación de datos en sitio de Publicación - 2')
 @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_esperadas_estadistica_nacional_coinciden(setup, valor_con_comas2, screenshots_folder):
@@ -159,6 +162,3 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, valor_con_comas2,
         assert valor_en_pagina3 == valor_con_comas2, (
             "Los valores no coinciden. Revisa el reporte para más detalles."
         )
-
-    # Cerrar el navegador
-    driver.quit()
