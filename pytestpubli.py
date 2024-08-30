@@ -132,6 +132,9 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_f
 
     file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
     capture_element_screenshot(driver, elemento3, file_path)
+
+    file_path = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
+    capture_full_page_screenshot(driver, file_path)
     
     with allure.step("Comparando los valores de sitio vs csv"):
         if valor_en_pagina3 == valor_con_comas2:
