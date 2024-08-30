@@ -70,6 +70,7 @@ def leer_datos_csv(filepath):
     with open(filepath, mode='r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
+            print(row.keys())  # Para verificar los nombres de columna
             yield row['allure_story'], row['valor'], row['xpath']
 
 @pytest.fixture
@@ -128,57 +129,62 @@ def screenshots_folder():
     return "screenshots_publi"
 
 @pytest.mark.parametrize("allure_story, valor, xpath", leer_datos_csv('elementos.csv'))
+@allure.feature('Validación de datos en sitio de Publicación - 2')
 def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_folder):
+    """
+    Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
+    """
+    # Aplicar la etiqueta @allure.story dinámicamente
+    with allure.story(allure_story):
+        valor_csv = "{:,.0f}".format(int(valor))
 
-    valor_csv = "{:,.0f}".format(int(valor))
+        driver = setup
+        elemento = driver.find_element(By.XPATH, xpath)
+        valor_en_pagina = elemento.text
 
-    driver = setup
-    elemento = driver.find_element(By.XPATH, xpath)
-    valor_en_pagina = elemento.text
+        file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas_avance_nacional')
+        capture_element_screenshot(driver, elemento, file_path)
 
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas_avance_nacional')
-    capture_element_screenshot(driver, elemento, file_path)
-
-    file_path2 = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
-    capture_full_page_screenshot(driver, file_path2)
-    
-    with allure.step("Comparando los valores de sitio vs csv"):
-        if valor_en_pagina == valor_csv:
-            allure.attach(
-                f"1.- Los valores coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
-                name="Resultado de la validación",
-                attachment_type=allure.attachment_type.TEXT
+        file_path2 = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
+        capture_full_page_screenshot(driver, file_path2)
+        
+        with allure.step("Comparando los valores de sitio vs csv"):
+            if valor_en_pagina == valor_csv:
+                allure.attach(
+                    f"1.- Los valores coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+                with open(file_path, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla del elemento",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+                with open(file_path2, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla completa",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+            else:
+                allure.attach(
+                    f"1.- Los valores no coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+                with open(file_path, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla del error",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+                with open(file_path2, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla completa",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+            assert valor_en_pagina == valor_csv, (
+                "Los valores no coinciden. Revisa el reporte para más detalles."
             )
-            with open(file_path, "rb") as image_file:
-                allure.attach(
-                    image_file.read(),
-                    name="Captura de pantalla del elemento",
-                    attachment_type=allure.attachment_type.PNG
-                )
-            with open(file_path2, "rb") as image_file:
-                allure.attach(
-                    image_file.read(),
-                    name="Captura de pantalla completa",
-                    attachment_type=allure.attachment_type.PNG
-                )
-        else:
-            allure.attach(
-                f"1.- Los valores no coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
-                name="Resultado de la validación",
-                attachment_type=allure.attachment_type.TEXT
-            )
-            with open(file_path, "rb") as image_file:
-                allure.attach(
-                    image_file.read(),
-                    name="Captura de pantalla del error",
-                    attachment_type=allure.attachment_type.PNG
-                )
-            with open(file_path2, "rb") as image_file:
-                allure.attach(
-                    image_file.read(),
-                    name="Captura de pantalla completa",
-                    attachment_type=allure.attachment_type.PNG
-                )
-        assert valor_en_pagina == valor_csv, (
-            "Los valores no coinciden. Revisa el reporte para más detalles."
-        )
