@@ -110,139 +110,55 @@ def setup():
     # Espera a que la página cargue completamente
     driver.implicitly_wait(10)
 
-    driver = setup
-    elemento = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
-    valor_en_pagina = elemento.text
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_capturadas')
-    capture_element_screenshot(driver, elemento, file_path)
-
-    elemento2 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[2]/p[1]/strong")
-    valor_en_pagina2 = elemento2.text
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_capturadas')
-    capture_element_screenshot(driver, elemento2, file_path)
-    #elemento2.screenshot(f'{file_path}')
-
-    elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
-    valor_en_pagina3 = elemento3.text
-    #print("Valor encontrado de actas esperadas en Estadística Nacional:", valor_en_pagina3)
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
-    capture_element_screenshot(driver, elemento3, file_path)
-    #elemento3.screenshot(f'{file_path}')
-
-    elemento4 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[2]/div[2]/div/div[3]/div[2]/div/div[2]/strong[1]")
-    valor_en_pagina4 = elemento4.text
-    #print("Valor encontrado de actas esperadas en Estadística Nacional:", valor_en_pagina4)
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
-    capture_element_screenshot(driver, elemento4, file_path)
-    #elemento4.screenshot(f'{file_path}')
-
-    elemento5 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-porcentaje-participacion/div/div/div/div/div[1]/div/div[1]/div[1]/div[1]/p/strong")
-    valor_en_pagina5 = elemento5.text
-    #print("Valor encontrado de actas esperadas en Estadística Nacional:", valor_en_pagina5)
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
-    capture_element_screenshot(driver, elemento5, file_path)
-    #elemento5.screenshot(f'{file_path}')
-
     file_path = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
     capture_full_page_screenshot(driver, file_path)
-    #print(f'Captura de pantalla guardada en {screenshot_path}')
+
+
+# Aquí puedes cargar tu DataFrame y comparar
+valor_con_comas = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_CAPTURADAS].astype(int).values)))
+valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERADAS].astype(int).values)))
+valor_con_comas3 = "{:,.0f}".format(int("".join(str(x) for x in df[TOTAL_VOTOS_C_CS].astype(int).values)))
+#print("Valor encontrado en dataframe:", valor_con_comas)
+
+@allure.feature('Validación de datos en sitio de Publicación')
+@allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
+@allure.tag('prioridad:alta', 'tipo:funcional')
+def test_actas_esperadas_estadistica_nacional_coinciden(setup, valor_con_comas2, screenshots_folder):
+    """
+    Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
+    """
+    driver = setup
+    elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
+    valor_en_pagina3 = elemento3.text
+
+    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
+    capture_element_screenshot(driver, elemento3, file_path)
     
-    # Aquí puedes cargar tu DataFrame y comparar
-    valor_con_comas = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_CAPTURADAS].astype(int).values)))
-    valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERADAS].astype(int).values)))
-    valor_con_comas3 = "{:,.0f}".format(int("".join(str(x) for x in df[TOTAL_VOTOS_C_CS].astype(int).values)))
-    #print("Valor encontrado en dataframe:", valor_con_comas)
-
-    # Comparar
-    print("VALIDACION DE PRESIDENCIA EN PUBLICACION VS CONTEOS DEL CSV.")
-    if valor_en_pagina3 == valor_con_comas2:
-        print("1.- El número de actas esperadas en Estadística Nacional coincide con el CSV.",valor_con_comas2)
-    else:
-        print("1.- El número de actas esperadas en Estadística Nacional no coincide con el CSV.",valor_con_comas2)  
-
-    @allure.feature('Validación de datos en sitio de Publicación')
-    @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
-    @allure.tag('prioridad:alta', 'tipo:funcional')
-    def test_actas_esperadas_estadistica_nacional_coinciden(driver, valor_con_comas2, screenshots_folder):
-        """
-        Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
-        """
-        elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
-        valor_en_pagina3 = elemento3.text
-
-        file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
-        capture_element_screenshot(driver, elemento3, file_path)
-        
-        with allure.step("Comparando los valores de sitio vs csv"):
-            if valor_en_pagina3 == valor_con_comas2:
-                allure.attach(
-                    f"1.- Los valores coinciden, Sitio: {valor_en_pagina3} CSV: {valor_con_comas2}",
-                    name="Resultado de la validación",
-                    attachment_type=allure.attachment_type.TEXT
-                )
-            else:
-                allure.attach(
-                    f"1.- Los valores no coinciden, Sitio: {valor_en_pagina3} CSV: {valor_con_comas2}",
-                    name="Resultado de la validación",
-                    attachment_type=allure.attachment_type.TEXT
-                )
-                # Adjuntar la captura de pantalla en caso de error
-                with open(file_path, "rb") as image_file:
-                    allure.attach(
-                        image_file.read(),
-                        name="Captura de pantalla del error",
-                        attachment_type=allure.attachment_type.PNG
-                    )
-
-            # Verificación final
-            assert valor_en_pagina3 == valor_con_comas2, (
-                "Los valores no coinciden. Revisa el reporte para más detalles."
+    with allure.step("Comparando los valores de sitio vs csv"):
+        if valor_en_pagina3 == valor_con_comas2:
+            allure.attach(
+                f"1.- Los valores coinciden, Sitio: {valor_en_pagina3} CSV: {valor_con_comas2}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
             )
-
-    if valor_en_pagina == valor_con_comas:
-        print("4.- El número de actas capturadas en Avance Nacional coincide con el CSV.",valor_con_comas)
-    else:
-        print("4.- El número de actas capturadas en Avance Nacional no coincide con el CSV.",valor_con_comas)  
-
-    @allure.feature('Validación de datos en sitio de Publicación')  # Usa etiquetas estándar de Allure
-    @allure.story('2.- Validación de número de actas capturadas en Avance Nacional')  # Usa etiquetas estándar de Allure
-    @allure.tag('prioridad:alta', 'tipo:funcional')
-    def test_actas_capturadas_avance_nacional_coinciden():
-        """
-        Prueba que los valores de actas capturadas en Avance Nacional coincidan con los valores del CSV.
-        """
-        with allure.step("Comparando los valores de sitio vs csv"):
-            if valor_en_pagina == valor_con_comas:
-                allure.attach(
-                    f"2.- Los valores coinciden, Sitio: {valor_en_pagina} CSV: {valor_con_comas} ",
-                    name="Resultado de la validación",
-                    attachment_type=allure.attachment_type.TEXT
-                )
-            else:
-                allure.attach(
-                    f"2.- Los valores no coinciden, Sitio: {valor_en_pagina} CSV: {valor_con_comas}",
-                    name="Resultado de la validación",
-                    attachment_type=allure.attachment_type.TEXT
-                )
-            assert valor_en_pagina == valor_con_comas, (
-                "Los valores no coinciden. Revisa el reporte para más detalles."
+        else:
+            allure.attach(
+                f"1.- Los valores no coinciden, Sitio: {valor_en_pagina3} CSV: {valor_con_comas2}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
             )
+            # Adjuntar la captura de pantalla en caso de error
+            with open(file_path, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla del error",
+                    attachment_type=allure.attachment_type.PNG
+                )
 
-    if valor_en_pagina2 == valor_con_comas:
-        print("4.- El número de actas capturadas en Estadística Nacional coincide con el CSV.",valor_con_comas)
-    else:
-        print("4.- El número de actas capturadas en Estadística Nacional no coincide con el CSV.",valor_con_comas)  
-    
-
-    if valor_en_pagina4 == valor_con_comas3:
-        print("11.- El total de votos coincide con el CSV.",valor_con_comas3)
-    else:
-        print("11.- El total de votos no coincide con el CSV.",valor_con_comas3)  
-    if valor_en_pagina5 == valor_con_comas3:
-        print("11.- El total de votos en Fórmula coincide con el CSV.",valor_con_comas3)
-    else:
-        print("11.- El total de votos en Fórmula no coincide con el CSV.",valor_con_comas3)  
-
+        # Verificación final
+        assert valor_en_pagina3 == valor_con_comas2, (
+            "Los valores no coinciden. Revisa el reporte para más detalles."
+        )
 
     # Cerrar el navegador
     driver.quit()
