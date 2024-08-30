@@ -140,6 +140,12 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_f
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
+            with open(file_path, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla del elemento",
+                    attachment_type=allure.attachment_type.PNG
+                )
         else:
             allure.attach(
                 f"1.- Los valores no coinciden, Sitio: {valor_en_pagina3} CSV: {valor_con_comas2}",
