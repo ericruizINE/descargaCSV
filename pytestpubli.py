@@ -123,10 +123,9 @@ valor_con_comas3 = "{:,.0f}".format(int("".join(str(x) for x in df[TOTAL_VOTOS_C
 @allure.feature('Validación de datos en sitio de Publicación - 2')
 @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
 @allure.tag('prioridad:alta', 'tipo:funcional')
-def test_actas_esperadas_estadistica_nacional_coinciden(setup, valor_con_comas2, screenshots_folder):
-    """
-    Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
-    """
+def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_folder):
+    valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df[ACTAS_ESPERADAS].astype(int).values)))
+
     driver = setup
     elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
     valor_en_pagina3 = elemento3.text
@@ -147,7 +146,6 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, valor_con_comas2,
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
-            # Adjuntar la captura de pantalla en caso de error
             with open(file_path, "rb") as image_file:
                 allure.attach(
                     image_file.read(),
@@ -155,7 +153,6 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, valor_con_comas2,
                     attachment_type=allure.attachment_type.PNG
                 )
 
-        # Verificación final
         assert valor_en_pagina3 == valor_con_comas2, (
             "Los valores no coinciden. Revisa el reporte para más detalles."
         )
