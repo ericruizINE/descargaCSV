@@ -33,21 +33,7 @@ pipeline {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     python3 24-05-07-BD-Descarga-Descomprimir_1.py
-               """
-          }
-        }
-        stage('Validación datos en CSV') {
-          steps {
-            sh """
-                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     python3 presidencia.py
-               """
-          }
-        }
-        stage('Validacion Publicación - Presidencia') {
-          steps {
-            sh """
-                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     python3 publicacion.py
                """
           }
