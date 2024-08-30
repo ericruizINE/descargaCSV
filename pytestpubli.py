@@ -121,25 +121,25 @@ def screenshots_folder():
     return "screenshots_publi"
 
 @allure.feature('Validación de datos en sitio de Publicación - 2')
-@allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
+@allure.story('1.- Validación de número de actas capturadas en Avance Nacional')
 @allure.tag('prioridad:alta', 'tipo:funcional')
-def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_folder):
-    valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_ESPERADAS'].astype(int).values)))
+def test_actas_capturadas_avance_nacional_coinciden(setup, df, screenshots_folder):
+    valor_csv = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_CAPTURADAS'].astype(int).values)))
 
     driver = setup
-    elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
+    elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
     valor_en_pagina3 = elemento3.text
 
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
+    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas_avance_nacional')
     capture_element_screenshot(driver, elemento3, file_path)
 
     file_path2 = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
     capture_full_page_screenshot(driver, file_path2)
     
     with allure.step("Comparando los valores de sitio vs csv"):
-        if valor_en_pagina3 == valor_con_comas2:
+        if valor_en_pagina3 == valor_csv:
             allure.attach(
-                f"1.- Los valores coinciden, Sitio: {valor_en_pagina3} CSV: {valor_con_comas2}",
+                f"1.- Los valores coinciden, Sitio: {valor_en_pagina3} CSV: {valor_csv}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
@@ -157,7 +157,7 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_f
                 )
         else:
             allure.attach(
-                f"1.- Los valores no coinciden, Sitio: {valor_en_pagina3} CSV: {valor_con_comas2}",
+                f"1.- Los valores no coinciden, Sitio: {valor_en_pagina3} CSV: {valor_csv}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
@@ -173,6 +173,63 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_f
                     name="Captura de pantalla completa",
                     attachment_type=allure.attachment_type.PNG
                 )
-        assert valor_en_pagina3 == valor_con_comas2, (
+        assert valor_en_pagina3 == valor_csv, (
+            "Los valores no coinciden. Revisa el reporte para más detalles."
+        )
+
+@allure.feature('Validación de datos en sitio de Publicación - 2')
+@allure.story('2.- Validación de número de actas esperadas en Estadística Nacional')
+@allure.tag('prioridad:alta', 'tipo:funcional')
+def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_folder):
+    valor_csv = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_ESPERADAS'].astype(int).values)))
+
+    driver = setup
+    elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
+    valor_en_pagina3 = elemento3.text
+
+    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
+    capture_element_screenshot(driver, elemento3, file_path)
+
+    file_path2 = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
+    capture_full_page_screenshot(driver, file_path2)
+    
+    with allure.step("Comparando los valores de sitio vs csv"):
+        if valor_en_pagina3 == valor_csv:
+            allure.attach(
+                f"1.- Los valores coinciden, Sitio: {valor_en_pagina3} CSV: {valor_csv}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+            with open(file_path, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla del elemento",
+                    attachment_type=allure.attachment_type.PNG
+                )
+            with open(file_path2, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla completa",
+                    attachment_type=allure.attachment_type.PNG
+                )
+        else:
+            allure.attach(
+                f"1.- Los valores no coinciden, Sitio: {valor_en_pagina3} CSV: {valor_csv}",
+                name="Resultado de la validación",
+                attachment_type=allure.attachment_type.TEXT
+            )
+            with open(file_path, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla del error",
+                    attachment_type=allure.attachment_type.PNG
+                )
+            with open(file_path2, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla completa",
+                    attachment_type=allure.attachment_type.PNG
+                )
+        assert valor_en_pagina3 == valor_csv, (
             "Los valores no coinciden. Revisa el reporte para más detalles."
         )
