@@ -45,14 +45,14 @@ pipeline {
                     //def screenshots = sh(script: "ls ${WORKSPACE}/screenshots_publi/*.png", returnStdout: true).trim().split('\n')
                     //screenshots.each { screenshot ->
                         //echo "Screenshot URL: ${env.BUILD_URL}execution/node/3/ws/screenshots_publi/${screenshot.split('/').last()}"
-                                     }
+                                     //}
                     //}
                 //script {
                     // Mostrar las URLs de los archivos
                     //def files = sh(script: "ls ${WORKSPACE}/Archivos/*.csv", returnStdout: true).trim().split('\n')
                     //files.each { file ->
                         //echo "Files URL: ${env.BUILD_URL}execution/node/3/ws/Archivos/${file.split('/').last()}"
-                                     }
+                                    // }
                     //}
             //}
         //}
