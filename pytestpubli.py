@@ -92,22 +92,26 @@ chrome_options.add_argument("--disable-gpu")  # Recomendado en sistemas Windows
 chrome_options.add_argument("--no-sandbox")  # Requerido para algunas distribuciones de Linux
 chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas distribuciones de Linux
 
-# Configurar el controlador de Chrome
-chromedriver_autoinstaller.install() 
-driver = webdriver.Chrome(options=chrome_options)
-print("Versión chromedriver:", driver.capabilities['browserVersion'])
-driver.maximize_window()
 
-# URL de la página que deseas validar
-url = 'https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura'
+@pytest.fixture
+def setup():
+    # Configurar el controlador de Chrome
+    chromedriver_autoinstaller.install() 
+    driver = webdriver.Chrome(options=chrome_options)
+    print("Versión chromedriver:", driver.capabilities['browserVersion'])
+    driver.maximize_window()
 
-# Navegar a la página web
-driver.get(url)
+    # URL de la página que deseas validar
+    url = 'https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura'
 
-# Espera a que la página cargue completamente
-driver.implicitly_wait(10)
+    # Navegar a la página web
+    driver.get(url)
+
+    # Espera a que la página cargue completamente
+    driver.implicitly_wait(10)
 
 try:
+    driver = setup
     elemento = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
     valor_en_pagina = elemento.text
     file_path = get_next_screenshot_path(screenshots_folder, 'actas_capturadas')
@@ -157,13 +161,19 @@ try:
     else:
         print("1.- El número de actas esperadas en Estadística Nacional no coincide con el CSV.",valor_con_comas2)  
 
-    @allure.feature('Validación de datos en sitio de Publicación')  # Usa etiquetas estándar de Allure
-    @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')  # Usa etiquetas estándar de Allure
+    @allure.feature('Validación de datos en sitio de Publicación')
+    @allure.story('1.- Validación de número de actas esperadas en Estadística Nacional')
     @allure.tag('prioridad:alta', 'tipo:funcional')
-    def test_actas_esperadas_estadistica_acional_coinciden():
+    def test_actas_esperadas_estadistica_nacional_coinciden(driver, valor_con_comas2, screenshots_folder):
         """
         Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
         """
+        elemento3 = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong")
+        valor_en_pagina3 = elemento3.text
+
+        file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
+        capture_element_screenshot(driver, elemento3, file_path)
+        
         with allure.step("Comparando los valores de sitio vs csv"):
             if valor_en_pagina3 == valor_con_comas2:
                 allure.attach(
@@ -177,6 +187,15 @@ try:
                     name="Resultado de la validación",
                     attachment_type=allure.attachment_type.TEXT
                 )
+                # Adjuntar la captura de pantalla en caso de error
+                with open(file_path, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla del error",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+
+            # Verificación final
             assert valor_en_pagina3 == valor_con_comas2, (
                 "Los valores no coinciden. Revisa el reporte para más detalles."
             )
