@@ -29,7 +29,7 @@ def get_next_screenshot_path(folder, base_filename):
             return path
         i += 1
 
-def capture_full_page_screenshot(driver, file_path):
+def capture_full_page_screenshot(driver, file_path2):
     """Captura una captura de pantalla completa de la página, manejando el desplazamiento."""
     # Obtener el tamaño total de la página
     total_width = driver.execute_script("return document.body.scrollWidth")
@@ -39,7 +39,7 @@ def capture_full_page_screenshot(driver, file_path):
     driver.set_window_size(total_width, total_height)
 
     # Tomar la captura de pantalla
-    driver.save_screenshot(file_path)
+    driver.save_screenshot(file_path2)
     #print(f'Captura de pantalla completa guardada en {file_path}')
 
 def capture_element_screenshot(driver, element, file_path):
@@ -133,8 +133,8 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_f
     file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas')
     capture_element_screenshot(driver, elemento3, file_path)
 
-    file_path = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
-    capture_full_page_screenshot(driver, file_path)
+    file_path2 = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
+    capture_full_page_screenshot(driver, file_path2)
     
     with allure.step("Comparando los valores de sitio vs csv"):
         if valor_en_pagina3 == valor_con_comas2:
@@ -147,6 +147,12 @@ def test_actas_esperadas_estadistica_nacional_coinciden(setup, df, screenshots_f
                 allure.attach(
                     image_file.read(),
                     name="Captura de pantalla del elemento",
+                    attachment_type=allure.attachment_type.PNG
+                )
+            with open(file_path2, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name="Captura de pantalla completa",
                     attachment_type=allure.attachment_type.PNG
                 )
         else:
