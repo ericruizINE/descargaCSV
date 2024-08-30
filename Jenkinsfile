@@ -17,15 +17,8 @@ pipeline {
                 sh 'apt-get update && apt-get install -y python3-venv'
                 sh 'apt-get update && apt-get install -y python3-pip'
                 sh "python3 -m venv ${VENV_DIR}"
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                // Activar el entorno virtual e instalar las dependencias
-                sh """
-                    . ${VENV_DIR}/bin/activate
-                    pip install --no-cache-dir -r requirements.txt
-                """
+                sh ". ${VENV_DIR}/bin/activate"
+                sh 'pip install --no-cache-dir -r requirements.txt'
             }
         }
         stage('Descarga de Archivos CSV Presidencia') {
@@ -36,11 +29,7 @@ pipeline {
                     python3 presidencia.py
                     python3 publicacion.py
                """
-          }
-        }
-        stage('Mostrar Screenshot URLs') {
-            steps {
-                script {
+               script {
                     // Mostrar las URLs de las capturas de pantalla
                     def screenshots = sh(script: "ls ${WORKSPACE}/screenshots_publi/*.png", returnStdout: true).trim().split('\n')
                     screenshots.each { screenshot ->
@@ -53,8 +42,7 @@ pipeline {
                     files.each { file ->
                         echo "Files URL: ${env.BUILD_URL}execution/node/3/ws/Archivos/${file.split('/').last()}"
                                      }
-                    }
-            }
+          }
         }
         stage('Ejecutar Pytest') {
             steps {
