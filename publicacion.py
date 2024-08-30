@@ -84,28 +84,30 @@ TOTAL_VOTOS_C_CS = 'TOTAL_VOTOS_C_CS'
 TOTAL_VOTOS_S_CS = 'TOTAL_VOTOS_S_CS'
 PORCENTAJE_PARTICIPACION_CIUDADANA = 'PORCENTAJE_PARTICIPACION_CIUDADANA'
 
-# Configurar las opciones de Chrome para el modo headless
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--window-size=1920x1080")  # Tamaño de ventana para las capturas de pantalla
-chrome_options.add_argument("--disable-gpu")  # Recomendado en sistemas Windows
-chrome_options.add_argument("--no-sandbox")  # Requerido para algunas distribuciones de Linux
-chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas distribuciones de Linux
+@pytest.fixture
+def driver():
+    # Configurar las opciones de Chrome para el modo headless
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--window-size=1920x1080")  # Tamaño de ventana para las capturas de pantalla
+    chrome_options.add_argument("--disable-gpu")  # Recomendado en sistemas Windows
+    chrome_options.add_argument("--no-sandbox")  # Requerido para algunas distribuciones de Linux
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Requerido para algunas distribuciones de Linux
 
-# Configurar el controlador de Chrome
-chromedriver_autoinstaller.install() 
-driver = webdriver.Chrome(options=chrome_options)
-print("Versión chromedriver:", driver.capabilities['browserVersion'])
-driver.maximize_window()
+    # Configurar el controlador de Chrome
+    chromedriver_autoinstaller.install() 
+    driver = webdriver.Chrome(options=chrome_options)
+    print("Versión chromedriver:", driver.capabilities['browserVersion'])
+    driver.maximize_window()
 
-# URL de la página que deseas validar
-url = 'https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura'
+    # URL de la página que deseas validar
+    url = 'https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura'
 
-# Navegar a la página web
-driver.get(url)
+    # Navegar a la página web
+    driver.get(url)
 
-# Espera a que la página cargue completamente
-driver.implicitly_wait(10)
+    # Espera a que la página cargue completamente
+    driver.implicitly_wait(10)
 
 try:
     elemento = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
