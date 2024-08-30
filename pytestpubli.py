@@ -110,9 +110,6 @@ def setup():
     # Espera a que la página cargue completamente
     driver.implicitly_wait(10)
 
-    yield driver
-    driver.quit()
-
     driver = setup
     elemento = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
     valor_en_pagina = elemento.text
@@ -245,6 +242,7 @@ def setup():
         print("11.- El total de votos en Fórmula coincide con el CSV.",valor_con_comas3)
     else:
         print("11.- El total de votos en Fórmula no coincide con el CSV.",valor_con_comas3)  
+
 
     # Cerrar el navegador
     driver.quit()
