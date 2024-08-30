@@ -110,6 +110,9 @@ def setup():
     # Espera a que la página cargue completamente
     driver.implicitly_wait(10)
 
+    yield driver
+    driver.quit()
+
 try:
     driver = setup
     elemento = driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
@@ -246,7 +249,3 @@ try:
 
 except Exception as e:
     print("Elemento no encontrado:", e)
-
-finally:
-    # Cerrar el navegador
-    driver.quit()
