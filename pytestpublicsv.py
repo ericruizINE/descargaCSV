@@ -66,11 +66,11 @@ def capture_element_screenshot(driver, element, file_path):
             os.remove(screenshot_path)  # Eliminar el archivo temporal
     #print(f'Captura de pantalla del elemento guardada en {file_path}')
 
+# Función para leer datos desde el CSV y eliminar el BOM si está presente
 def leer_datos_csv(filepath):
-    with open(filepath, mode='r', encoding='utf-8') as file:
+    with open(filepath, mode='r', encoding='utf-8-sig') as file:  # '-sig' para eliminar el BOM
         reader = csv.DictReader(file)
         for row in reader:
-            print(row.keys())  # Para verificar los nombres de columna
             yield row['allure_story'], row['valor'], row['xpath']
 
 @pytest.fixture
