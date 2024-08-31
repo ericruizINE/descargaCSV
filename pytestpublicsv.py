@@ -137,7 +137,7 @@ def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_fol
     # Aplicar la etiqueta @allure.story dinámicamente
     allure.dynamic.story(allure_story)  # Etiqueta dinámica basada en el CSV
 
-    valor_csv = valor
+    valor_csv = "{:,.0f}".format(int(valor))
     driver = setup
     elemento = driver.find_element(By.XPATH, xpath)
     valor_en_pagina = elemento.text
