@@ -7,7 +7,7 @@ pipeline {
         stage('Clean Up and Checkout ') {
             steps {
                 deleteDir()
-                Clonar el repositorio Git
+                //Clonar el repositorio Git
                 git url: 'https://github.com/ericruizINE/descargaCSV.git', branch: 'main'
             }
         }
