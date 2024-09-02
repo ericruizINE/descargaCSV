@@ -134,7 +134,7 @@ def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_fol
 
     #valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_ESPERADAS'].astype(int).values)))
 
-    valor_csv = "{:,.0f}".format(int(valor)) 
+    valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
     driver = setup
     elemento = driver.find_element(By.XPATH, xpath)
     valor_en_pagina = elemento.text
