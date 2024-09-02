@@ -33,8 +33,6 @@ pipeline {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     python3 24-05-07-BD-Descarga-Descomprimir_1.py
-                    python3 presidencia.py
-                    python3 publicacion.py
                """
           }
         }
@@ -61,8 +59,6 @@ pipeline {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest presidencia.py --alluredir=report
-                    pytest publicacion.py --alluredir=report
-                    pytest pytestpubli.py --alluredir=report
                     pytest pytestpublicsv.py --alluredir=report
                """
             }
