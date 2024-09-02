@@ -53,7 +53,7 @@ def capture_element_screenshot(driver, element, file_path):
     driver.execute_script("arguments[0].style.border='3px solid red'", element)
     
     # Desplazar la página hasta que el elemento esté visible
-    driver.execute_script("arguments[0].scrollIntoView();", element)
+    driver.execute_script("window.scrollTo(0, arguments[0].getBoundingClientRect().top + window.scrollY - 100);", element)
 
     # Esperar a que el elemento sea visible
     WebDriverWait(driver, 10).until(
