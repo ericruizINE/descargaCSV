@@ -132,6 +132,9 @@ def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_fol
     # Aplicar la etiqueta @allure.story dinámicamente
     allure.dynamic.story(allure_story)  # Etiqueta dinámica basada en el CSV
 
+    # Establecer un título dinámico para la prueba
+    allure.dynamic.title(allure_story")
+
     #valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_ESPERADAS'].astype(int).values)))
 
     valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
