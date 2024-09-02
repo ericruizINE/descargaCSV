@@ -100,28 +100,23 @@ def setup():
 
 @pytest.fixture
 def df():
-    # Cargar tu DataFrame aquí
-    # Por ejemplo:
-    import pandas as pd
     # Leer el archivo CSV en un DataFrame
     csv_path = '/var/jenkins_home/workspace/Publicacion/Archivos/PRES_2024.csv'
-    df = pd.read_csv(csv_path, skiprows=3, nrows=1, header=None, names=["ACTAS_ESPERADAS","ACTAS_REGISTRADAS","ACTAS_FUERA_CATALOGO","ACTAS_CAPTURADAS","PORCENTAJE_ACTAS_CAPTURADAS","ACTAS_CONTABILIZADAS","PORCENTAJE_ACTAS_CONTABILIZADAS","PORCENTAJE_ACTAS_INCONSISTENCIAS","ACTAS_NO_CONTABILIZADAS","LISTA_NOMINAL_ACTAS_CONTABILIZADAS","TOTAL_VOTOS_C_CS","TOTAL_VOTOS_S_CS","PORCENTAJE_PARTICIPACION_CIUDADANA"])
+    df = pd.read_csv(csv_path, skiprows=3, nrows=1, header=None, names=[
+        "ACTAS_ESPERADAS", "ACTAS_REGISTRADAS", "ACTAS_FUERA_CATALOGO", 
+        "ACTAS_CAPTURADAS", "PORCENTAJE_ACTAS_CAPTURADAS", 
+        "ACTAS_CONTABILIZADAS", "PORCENTAJE_ACTAS_CONTABILIZADAS", 
+        "PORCENTAJE_ACTAS_INCONSISTENCIAS", "ACTAS_NO_CONTABILIZADAS", 
+        "LISTA_NOMINAL_ACTAS_CONTABILIZADAS", "TOTAL_VOTOS_C_CS", 
+        "TOTAL_VOTOS_S_CS", "PORCENTAJE_PARTICIPACION_CIUDADANA"
+    ])
 
-    # Mapeo de las columnas conteos
-    ACTAS_ESPERADAS = 'ACTAS_ESPERADAS'
-    ACTAS_REGISTRADAS = 'ACTAS_REGISTRADAS'
-    ACTAS_FUERA_CATALOGO = 'ACTAS_FUERA_CATALOGO'
-    ACTAS_CAPTURADAS = 'ACTAS_CAPTURADAS'
-    PORCENTAJE_ACTAS_CAPTURADAS = 'PORCENTAJE_ACTAS_CAPTURADAS'
-    ACTAS_CONTABILIZADAS = 'ACTAS_CONTABILIZADAS'
-    PORCENTAJE_ACTAS_CONTABILIZADAS = 'PORCENTAJE_ACTAS_CONTABILIZADAS'
-    PORCENTAJE_ACTAS_INCONSISTENCIAS = 'PORCENTAJE_ACTAS_INCONSISTENCIAS'
-    ACTAS_NO_CONTABILIZADAS = 'ACTAS_NO_CONTABILIZADAS'
-    LISTA_NOMINAL_ACTAS_CONTABILIZADAS = 'LISTA_NOMINAL_ACTAS_CONTABILIZADAS'
-    TOTAL_VOTOS_C_CS = 'TOTAL_VOTOS_C_CS'
-    TOTAL_VOTOS_S_CS = 'TOTAL_VOTOS_S_CS'
-    PORCENTAJE_PARTICIPACION_CIUDADANA = 'PORCENTAJE_PARTICIPACION_CIUDADANA'
-    return pd.DataFrame(df)
+    # Retornar solo las columnas necesarias en un nuevo DataFrame
+    selected_columns = df[[
+        "ACTAS_ESPERADAS", "ACTAS_CAPTURADAS", "TOTAL_VOTOS_C_CS"
+    ]]
+
+    return selected_columns
 
 @pytest.fixture
 def screenshots_folder():
@@ -139,7 +134,7 @@ def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_fol
 
     #valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_ESPERADAS'].astype(int).values)))
 
-    valor_csv = "{:,.0f}".format(int("".join(str(x) for x in df[{valor}].astype(int).values)))
+    valor_csv = "{:,.0f}".format(int(valor)) 
     driver = setup
     elemento = driver.find_element(By.XPATH, xpath)
     valor_en_pagina = elemento.text
