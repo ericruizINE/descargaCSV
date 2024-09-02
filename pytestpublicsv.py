@@ -4,7 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support import expected_conditions as EC
 import chromedriver_autoinstaller
 import time
 import re
@@ -154,7 +156,9 @@ def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_fol
 
     valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
     driver = setup
-    elemento = driver.find_element(By.XPATH, xpath)
+    #elemento = driver.find_element(By.XPATH, xpath)
+    elemento = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "xpath"))
+)
     valor_en_pagina = elemento.text
 
     file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas_avance_nacional')
