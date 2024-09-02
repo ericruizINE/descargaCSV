@@ -43,23 +43,23 @@ def capture_full_page_screenshot(driver, file_path2):
     driver.save_screenshot(file_path2)
     #print(f'Captura de pantalla completa guardada en {file_path}')
 
-def capture_element_screenshot(driver, element, file_path):
+def capture_element_screenshot(driver, element, file_path, margin=10):
     """Captura una captura de pantalla de un elemento específico, manejando el desplazamiento."""
     # Obtener la ubicación y el tamaño del elemento
-    location = element.location
+    location = element.location_once_scrolled_into_view
     size = element.size
+
+    # Abrir la captura de pantalla y recortar el área del elemento
+    left = location['x'] - margin
+    top = location['y'] - margin
+    right = location['x'] + size['width'] + margin
+    bottom = location['y'] + size['height'] + margin
 
     # Tomar la captura de pantalla de toda la página
     screenshot_path = 'temp_screenshot.png'
     driver.save_screenshot(screenshot_path)
 
-    # Abrir la captura de pantalla y recortar el área del elemento
     image = Image.open(screenshot_path)
-    left = location['x']
-    top = location['y']
-    right = location['x'] + size['width']
-    bottom = location['y'] + size['height']
-
     image = image.crop((left, top, right, bottom))
     image.save(file_path)
     if os.path.exists(screenshot_path):
