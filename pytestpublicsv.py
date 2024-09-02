@@ -137,6 +137,7 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
 
     valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
     driver = setup
+    selector = selector
     elemento = driver.find_element(selector, ruta)
     valor_en_pagina = elemento.text
 
