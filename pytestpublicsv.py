@@ -31,7 +31,7 @@ def get_next_screenshot_path(folder, base_filename):
         i += 1
 
 def capture_full_page_screenshot(driver, file_path2):
-    """Captura una captura de pantalla completa de la página, manejando el desplazamiento."""
+    """Captura de pantalla completa de la página, manejando el desplazamiento."""
     # Obtener el tamaño total de la página
     total_width = driver.execute_script("return document.body.scrollWidth")
     total_height = driver.execute_script("return document.body.scrollHeight")
@@ -44,7 +44,10 @@ def capture_full_page_screenshot(driver, file_path2):
     #print(f'Captura de pantalla completa guardada en {file_path}')
 
 def capture_element_screenshot(driver, element, file_path):
-    """Captura una captura de pantalla de un elemento específico, manejando el desplazamiento."""
+    """Captura de pantalla de un elemento específico, manejando el desplazamiento."""
+    # Desplazar la página hasta que el elemento esté visible
+    driver.execute_script("arguments[0].scrollIntoView();", element)
+
     # Obtener la ubicación y el tamaño del elemento
     location = element.location
     size = element.size
@@ -60,10 +63,24 @@ def capture_element_screenshot(driver, element, file_path):
     right = location['x'] + size['width']
     bottom = location['y'] + size['height']
 
+    # Agregar un margen para evitar cortar bordes
+    margin = 10
+    left -= margin
+    top -= margin
+    right += margin
+    bottom += margin
+
+    # Asegurar que las coordenadas sean válidas
+    width, height = image.size
+    left = max(0, left)
+    top = max(0, top)
+    right = min(width, right)
+    bottom = min(height, bottom)
+
     image = image.crop((left, top, right, bottom))
     image.save(file_path)
     if os.path.exists(screenshot_path):
-            os.remove(screenshot_path)  # Eliminar el archivo temporal
+        os.remove(screenshot_path)  # Eliminar el archivo temporal
     #print(f'Captura de pantalla del elemento guardada en {file_path}')
 
 # Función para leer datos desde el CSV y eliminar el BOM si está presente
@@ -124,7 +141,7 @@ def screenshots_folder():
     return "screenshots_publi"
 
 @pytest.mark.parametrize("allure_story, valor, xpath", leer_datos_csv('elementos.csv'))
-@allure.feature('Validación de datos en sitio de Publicación - 2')
+@allure.feature('Validación de datos en sitio de Publicación')
 def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_folder):
     """
     Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
@@ -134,8 +151,6 @@ def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_fol
 
     # Establecer un título dinámico para la prueba
     allure.dynamic.title(allure_story)
-
-    #valor_con_comas2 = "{:,.0f}".format(int("".join(str(x) for x in df['ACTAS_ESPERADAS'].astype(int).values)))
 
     valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
     driver = setup
