@@ -125,7 +125,7 @@ def screenshots_folder():
 
 @pytest.mark.parametrize("allure_story, valor, xpath", leer_datos_csv('elementos.csv'))
 @allure.feature('Validación de datos en sitio de Publicación')
-def test_validacion_datos(setup, df, allure_story, valor, selector, ruta screenshots_folder):
+def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screenshots_folder):
     """
     Prueba que los valores de actas esperadas en Estadística Nacional coincidan con los valores del CSV.
     """
