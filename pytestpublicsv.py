@@ -67,7 +67,6 @@ def capture_element_screenshot(driver, element, file_path):
     #print(f'Captura de pantalla del elemento guardada en {file_path}')
 
 # Función para leer datos desde el CSV y eliminar el BOM si está presente
-@pytest.fixture
 def leer_datos_csv(filepath):
     wdf = pd.read_csv(filepath, encoding='utf-8-sig')
 
