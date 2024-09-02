@@ -1,3 +1,3 @@
 ﻿allure_story,valor,selector,ruta
 Validación de número de actas capturadas en Avance Nacional,ACTAS_CAPTURADAS,By.XPATH,/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong
-Validación de número de actas esperadas en Estadística Nacional,ACTAS_ESPERADAS,By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong
+Validación de número de actas esperadas en Estadística Nacional,ACTAS_ESPERADAS,By.CSS_SELECTOR,body > app-root > app-federal > div > div > div.col-12.col-xl-12.padding-start-nav-l > app-nacional > div > app-estadistica > div.row.bg-circunscripcion.estadistica.pb-4.mb-3.br-8 > div:nth-child(1) > div.row.justify-content-center.pt-5.border2-r > div:nth-child(1) > p.f16.pt-1.xh-highlight > strong
