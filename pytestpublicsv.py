@@ -67,10 +67,9 @@ def capture_element_screenshot(driver, element, file_path):
     #print(f'Captura de pantalla del elemento guardada en {file_path}')
 
 # Función para leer datos desde el CSV y eliminar el BOM si está presente
-def leer_datos_csv():
-    # Asegúrate de leer el CSV con el encoding correcto
-    csv_path = '/var/jenkins_home/workspace/Publicacion/Archivos/PRES_2024.csv'
-    df = pd.read_csv(csv_path, encoding='utf-8-sig')
+@pytest.fixture
+def leer_datos_csv(filepath):
+    wdf = pd.read_csv(filepath, encoding='utf-8-sig')
 
     for index, row in df.iterrows():
         yield row['allure_story'], row['valor'], row['xpath']
