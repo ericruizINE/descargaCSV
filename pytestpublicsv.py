@@ -139,7 +139,7 @@ def test_validacion_datos(setup, df, allure_story, valor, xpath, screenshots_fol
 
     valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
     driver = setup
-    elemento = driver.find_element(By.XPATH, xpath)
+    elemento = driver.find_element(By.CSS_SELECTOR, xpath)
     valor_en_pagina = elemento.text
 
     file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas_avance_nacional')
