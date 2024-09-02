@@ -136,9 +136,12 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
     allure.dynamic.title(allure_story)
 
     valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
+
+    # Convertir el tipo de localizador a su objeto correspondiente de Selenium
+    locator_type_obj = eval(selector)
+    
     driver = setup
-    selector = selector
-    elemento = driver.find_element(selector, ruta)
+    elemento = driver.find_element(locator_type_obj, ruta)
     valor_en_pagina = elemento.text
 
     file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas_avance_nacional')
