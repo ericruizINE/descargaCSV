@@ -1,7 +1,7 @@
 pipeline {
     agent any    
     environment {
-        VENV_DIR = '${env.BUILD_URL}execution/node/3/ws/venv'
+        VENV_DIR = "${env.BUILD_URL}execution/node/3/ws/venv"
     }
     stages {
         // stage('Clean Up and Checkout ') {
