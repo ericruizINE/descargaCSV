@@ -1,15 +1,8 @@
 import pandas as pd
 import numpy as np
-from rich import print
 import re
-import datetime
 import pytest
 import allure
-
-def registrar_hora():
-    ahora = datetime.datetime.now()
-    hora_formateada = ahora.strftime("%Y-%m-%d %H:%M:%S")
-    print("Hora de ejecución:", hora_formateada)
 
 file_path = '/var/jenkins_home/workspace/Publicacion/Archivos/PRES_2024.csv'
 df = pd.read_csv(file_path, skiprows=4, delimiter=',', low_memory=False)  # Cambia ';' por el delimitador correcto
@@ -144,18 +137,6 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     participacionciu = df1[PORCENTAJE_PARTICIPACION_CIUDADANA].values
     #print(value_counts11)
 
-print("VALIDACION DE CSV DE PRESIDENCIA, REALIZANDO CONTEOS CON LOS DATOS Y VALIDANDO CON EL PRIMER ENCABEZADO")
-
-registrar_hora()
-print("Archivo:", file_path)
-
-print("1.- ACTAS_ESPERADAS:", df1[ACTAS_ESPERADAS].values)
-
-if np.array_equal(value_counts3, actas_regis):
-    print("[green]2.- Los valores de ACTAS_REGISTRADAS coinciden:[/green]", actas_regis)
-else:
-    print("[red]2.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", actas_regis, "vs", value_counts3)
-
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
 @allure.story('2.- Validación de Actas Registradas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
@@ -176,9 +157,11 @@ def test_actas_registradas_coinciden():
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
-        assert np.array_equal(value_counts3, actas_regis), (
-            "Los valores no coinciden. Revisa el reporte para más detalles."
-        )
+        # assert np.array_equal(value_counts3, actas_regis), (
+        #     "Los valores no coinciden. Revisa el reporte para más detalles."
+        # )
+    if value_counts3 != actas_fuera:
+        pytest.fail(f"Los valores no coinciden. Sitio: {value_counts3} CSV: {actas_fuera}")
 
 if np.array_equal(value_counts1, actas_fuera):
     print("[green]3.- Los valores de ACTAS_FUERA_CATALOGO coinciden:[/green]", actas_fuera)
