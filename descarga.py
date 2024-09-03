@@ -26,19 +26,19 @@ if respuesta.status_code == 200:
 else:
     print(f'Error al descargar: {respuesta.status_code}')
     
-# archivo_zip1 = os.path.join(f"{directorio_destino}/20240603_2005_PREP.zip")  # Nombre del archivo ZIP a descomprimir
-# # Descomprimir el archivo ZIP
-# with zipfile.ZipFile(archivo_zip1, 'r') as zip_ref:
-#     zip_ref.extractall(directorio_destino)
+archivo_zip1 = os.path.join(f"{directorio_destino}/20240603_2005_PREP.zip")  # Nombre del archivo ZIP a descomprimir
+# Descomprimir el archivo ZIP
+with zipfile.ZipFile(archivo_zip1, 'r') as zip_ref:
+    zip_ref.extractall(directorio_destino)
 
-# print(f'Archivo ZIP "{archivo_zip1}" descomprimido exitosamente en "{directorio_destino}"')
+print(f'Archivo ZIP "{archivo_zip1}" descomprimido exitosamente en "{directorio_destino}"')
 
 @pytest.fixture
 def directorio_destino():
     return "/var/jenkins_home/workspace/Publicacion/Archivos"
 
 @pytest.mark.parametrize("archivo_zip, archivos_esperados", [
-    ("20240603_2005_PREP.zip", ["PRES_2024.csv", "PRES_CANDIDATURAS_2024.csv"]),
+    ("20240603_2005_PREP_PRES.zip", ["PRES_2024.csv", "PRES_CANDIDATURAS_2024.csv"]),
     # Agrega aquí más tuplas (archivo_zip, archivos_esperados) si quieres probar varios
 ])
 @allure.feature('Descarga de CSV Presidencia')  
