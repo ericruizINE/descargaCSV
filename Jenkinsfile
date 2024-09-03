@@ -63,16 +63,16 @@ pipeline {
                """
             }
         }
-        stage('Publicar Reporte Allure') {
-            steps {
-                allure([
-                    includeProperties: false,
-                    jdk: '',
-                    reportBuildPolicy: 'ALWAYS',
-                    results: [[path: 'report']]
-                    ])
-                  }
-        }
+        // stage('Publicar Reporte Allure') {
+        //     steps {
+        //         allure([
+        //             includeProperties: false,
+        //             jdk: '',
+        //             reportBuildPolicy: 'ALWAYS',
+        //             results: [[path: 'report']]
+        //             ])
+        //           }
+        // }
     }
     post {
         always {

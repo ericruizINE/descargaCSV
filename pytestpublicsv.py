@@ -194,5 +194,12 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
             #         attachment_type=allure.attachment_type.PNG
             #     )
         # Asegúrate de que la excepción de pytest ocurra después de la adjunta de Allure
-    if valor_en_pagina != valor:
-        pytest.fail(f"Los valores no coinciden. Sitio: {valor_en_pagina} CSV: {valor}")
+    # Manejo de excepciones para múltiples validaciones
+    resultados_fallidos = []
+    try:
+        assert valor_en_pagina == valor
+    except AssertionError as e:
+        resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: {valor}")
+
+    if resultados_fallidos:
+        pytest.fail(f"Errores en validaciones: {', '.join(resultados_fallidos)}")
