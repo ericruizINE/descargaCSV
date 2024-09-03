@@ -49,6 +49,12 @@ def capture_element_screenshot(driver, element, file_path):
     """
     Captura una captura de pantalla resaltando el elemento específico con un borde.
     """
+    # Obtener el tamaño total de la página
+    total_width = driver.execute_script("return document.body.scrollWidth")
+    total_height = driver.execute_script("return document.body.scrollHeight")
+
+    # Establecer el tamaño de la ventana al tamaño total de la página
+    driver.set_window_size(total_width, total_height)
     # Resaltar el elemento usando JavaScript
     driver.execute_script("arguments[0].style.border='3px solid red'", element)
     
