@@ -60,7 +60,7 @@ def test_descomprimir_archivo(archivo_zip, directorio_destino):
             zip_ref.extractall(directorio_destino)
 
     # Verificar si la descompresión fue exitosa
-    archivo_descomprimido = os.path.join(directorio_destino, "PRES_2024.csv")  
+    archivo_descomprimido = os.path.join(directorio_destino, "20240603_2005_PREP.zip")  
     assert os.path.exists(archivo_descomprimido), f"El archivo {archivo_descomprimido} no se descomprimió correctamente"
 
     # Agregar información al reporte de Allure
