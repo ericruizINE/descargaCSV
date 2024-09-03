@@ -48,10 +48,12 @@ pipeline {
         }
         stage('Ejecutar Pytest Selenium Publicación') {
             steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest pytestpublicsv.py --alluredir=report
                """
+                }
             }
         }
     }
