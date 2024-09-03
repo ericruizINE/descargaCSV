@@ -57,11 +57,13 @@ def test_descomprimir_archivo(archivo_zip, archivos_esperados, directorio_destin
 
     with allure.step("Descomprimiendo archivo ZIP"):
         with zipfile.ZipFile(archivo_zip_path, 'r') as zip_ref:
-            zip_ref.extractall(directorio_destino)
+            # Crear una carpeta temporal para descomprimir
+            carpeta_temporal = os.path.join(directorio_destino, archivo_zip.replace(".zip", ""))
+            zip_ref.extractall(carpeta_temporal)
 
     # Verificar y adjuntar los archivos descomprimidos
     for archivo in archivos_esperados:
-        ruta_completa = os.path.join(directorio_destino, archivo)
+        ruta_completa = os.path.join(carpeta_temporal, archivo)
         if os.path.exists(ruta_completa):
             allure.attach.file(ruta_completa, name=f"Archivo CSV: {archivo}", attachment_type=allure.attachment_type.CSV)
             
@@ -74,5 +76,5 @@ def test_descomprimir_archivo(archivo_zip, archivos_esperados, directorio_destin
             pytest.fail(f"El archivo CSV {archivo} no se encontró en el directorio de destino.")
 
     # Adjuntar la información de éxito general
-    allure.attach(f"El archivo ZIP {archivo_zip} se descomprimió exitosamente en {directorio_destino}", 
+    allure.attach(f"El archivo ZIP {archivo_zip} se descomprimió exitosamente en {carpeta_temporal}", 
                   name="Resultado de descompresión", attachment_type=allure.attachment_type.TEXT)
