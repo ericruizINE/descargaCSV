@@ -280,7 +280,8 @@ def test_actas_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts == actas_con
+        #assert value_counts == actas_con
+        assert value_counts.equals(actas_con), "Los valores no coinciden"
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts} Encabezado CSV: {actas_con}")
 
