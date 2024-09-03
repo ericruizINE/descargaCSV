@@ -128,7 +128,7 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     actas_cap = df1[ACTAS_CAPTURADAS].astype(int).values
     actas_cap_por = df1[PORCENTAJE_ACTAS_CAPTURADAS].astype(int).values
     actas_con = int(df1['ACTAS_CONTABILIZADAS'].iloc[0]) 
-    actas_con_por = df1[PORCENTAJE_ACTAS_CONTABILIZADAS].astype(int).values
+    actas_con_por = float(df1['PORCENTAJE_ACTAS_CONTABILIZADAS'].iloc[0])
     actas_incon_por = df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].astype(int).values
     actas_nocon = df1[ACTAS_NO_CONTABILIZADAS].astype(int).values
     lnactascon = df1[LISTA_NOMINAL_ACTAS_CONTABILIZADAS].astype(int).values
@@ -280,8 +280,7 @@ def test_actas_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        #assert value_counts == actas_con
-        assert value_counts.equals(actas_con), "Los valores no coinciden"
+        assert value_counts == actas_con
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts} Encabezado CSV: {actas_con}")
 
