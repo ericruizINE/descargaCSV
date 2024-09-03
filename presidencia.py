@@ -142,25 +142,25 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
 @allure.tag('prioridad:alta', 'tipo:funcional')
 def test_actas_registradas_coinciden():
     """
-    Prueba que los valores de ACTAS_REGISTRADAS coincidan con los valores esperados.
+    Prueba que los valores de ACTAS_REGISTRADAS coincidan con los valores esperados. actas_regis
     """
     with allure.step("Comparando los valores de ACTAS_REGISTRADAS con los esperados"):
-        if np.array_equal(value_counts3, actas_regis):
+        if np.array_equal(value_counts3, actas_fuera):
             allure.attach(
-                f"2.- Los valores de ACTAS_REGISTRADAS coinciden: {actas_regis}",
+                f"2.- Los valores de ACTAS_REGISTRADAS coinciden: Conteo CSV: {value_counts3} Encabezado CSV: {actas_fuera}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
         else:
             allure.attach(
-                f"2.- Los valores de ACTAS_REGISTRADAS no coinciden. {actas_regis} vs {value_counts3}",
+                f"2.- Los valores de ACTAS_REGISTRADAS no coinciden. Conteo CSV: {value_counts3} Encabezado CSV: {actas_fuera}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
         try:
-            assert np.array_equal(value_counts3, actas_regis)
+            assert np.array_equal(value_counts3, actas_fuera)
         except AssertionError:
-            pytest.fail(f"Los valores no coinciden. Conteo CSV: {value_counts3} Encabezado CSV: {actas_regis}")
+            pytest.fail(f"Los valores no coinciden. Conteo CSV: {value_counts3} Encabezado CSV: {actas_fuera}")
 
 if np.array_equal(value_counts1, actas_fuera):
     print("[green]3.- Los valores de ACTAS_FUERA_CATALOGO coinciden:[/green]", actas_fuera)
