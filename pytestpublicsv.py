@@ -32,19 +32,6 @@ def get_next_screenshot_path(folder, base_filename):
             return path
         i += 1
 
-def capture_full_page_screenshot(driver, file_path2):
-    """Captura una captura de pantalla completa de la página, manejando el desplazamiento."""
-    # Obtener el tamaño total de la página
-    total_width = driver.execute_script("return document.body.scrollWidth")
-    total_height = driver.execute_script("return document.body.scrollHeight")
-
-    # Establecer el tamaño de la ventana al tamaño total de la página
-    driver.set_window_size(total_width, total_height)
-
-    # Tomar la captura de pantalla
-    driver.save_screenshot(file_path2)
-    #print(f'Captura de pantalla completa guardada en {file_path}')
-
 def capture_element_screenshot(driver, element, file_path):
     """
     Captura una captura de pantalla resaltando el elemento específico con un borde.
@@ -147,44 +134,51 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
     # Convertir el tipo de localizador a su objeto correspondiente de Selenium
     locator_type_obj = eval(selector)
     
-    driver = setup
-    elemento = driver.find_element(locator_type_obj, ruta)
-    valor_en_pagina = elemento.text
-
-    file_path = get_next_screenshot_path(screenshots_folder, 'captura_elemento')
-    capture_element_screenshot(driver, elemento, file_path)
-    
-    with allure.step("Comparando los valores de sitio vs csv"):
-        if valor_en_pagina == valor_csv:
-            allure.attach(
-                f"Los valores coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
-                name="Resultado de la validación",
-                attachment_type=allure.attachment_type.TEXT
-            )
-            with open(file_path, "rb") as image_file:
-                allure.attach(
-                    image_file.read(),
-                    name="Captura de pantalla del elemento",
-                    attachment_type=allure.attachment_type.PNG
-                )
-        else:
-            allure.attach(
-                f"Los valores no coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
-                name="Resultado de la validación",
-                attachment_type=allure.attachment_type.TEXT
-            )
-            with open(file_path, "rb") as image_file:
-                allure.attach(
-                    image_file.read(),
-                    name="Captura de pantalla del error",
-                    attachment_type=allure.attachment_type.PNG
-                )
-    # Manejo de excepciones para múltiples validaciones
-    resultados_fallidos = []
     try:
-        assert valor_en_pagina == valor_csv
-    except AssertionError as e:
-        resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: {valor_csv}")
+        driver = setup
+        elemento = driver.find_element(locator_type_obj, ruta)
+        valor_en_pagina = elemento.text
 
-    if resultados_fallidos:
-        pytest.fail(f"Error en validación: {', '.join(resultados_fallidos)}")
+        file_path = get_next_screenshot_path(screenshots_folder, 'captura_elemento')
+        capture_element_screenshot(driver, elemento, file_path)
+        
+        with allure.step("Comparando los valores de sitio vs csv"):
+            if valor_en_pagina == valor_csv:
+                allure.attach(
+                    f"Los valores coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+                with open(file_path, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla del elemento",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+            else:
+                allure.attach(
+                    f"Los valores no coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+                with open(file_path, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla del error",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+        # Manejo de excepciones para múltiples validaciones
+        resultados_fallidos = []
+        try:
+            assert valor_en_pagina == valor_csv
+        except AssertionError as e:
+            resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: {valor_csv}")
+
+        if resultados_fallidos:
+            pytest.fail(f"Error en validación: {', '.join(resultados_fallidos)}")
+            
+    except NoSuchElementException:
+        # Manejar la excepción si el elemento no se encuentra
+        error_message = f"Elemento no encontrado: {selector} - {ruta}"
+        allure.attach(f"Error: {error_message}", name="NoSuchElementException", attachment_type=allure.attachment_type.TEXT)
+        pytest.fail(error_message)
