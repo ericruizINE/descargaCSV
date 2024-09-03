@@ -197,9 +197,9 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert valor_en_pagina == valor
+        assert valor_en_pagina == valor_csv
     except AssertionError as e:
-        resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: {valor}")
+        resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: valor_csv")
 
     if resultados_fallidos:
         pytest.fail(f"Errores en validaciones: {', '.join(resultados_fallidos)}")
