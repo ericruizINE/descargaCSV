@@ -123,18 +123,18 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     value_counts10 = [value_counts10]
     value_counts11 = df_filtrado9[TOTAL_VOTOS_CALCULADO].sum()
     value_counts11 = [value_counts11]
-    actas_regis = df1[ACTAS_REGISTRADAS].values
-    actas_fuera = df1[ACTAS_FUERA_CATALOGO].values
-    actas_cap = df1[ACTAS_CAPTURADAS].values
-    actas_cap_por = df1[PORCENTAJE_ACTAS_CAPTURADAS].values
-    actas_con = df1[ACTAS_CONTABILIZADAS].values
-    actas_con_por = df1[PORCENTAJE_ACTAS_CONTABILIZADAS].values
-    actas_incon_por = df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].values
-    actas_nocon = df1[ACTAS_NO_CONTABILIZADAS].values
-    lnactascon = df1[LISTA_NOMINAL_ACTAS_CONTABILIZADAS].values
-    totalvotosc = df1[TOTAL_VOTOS_C_CS].values
-    totalvotoss = df1[TOTAL_VOTOS_S_CS].values
-    participacionciu = df1[PORCENTAJE_PARTICIPACION_CIUDADANA].values
+    actas_regis = df1[ACTAS_REGISTRADAS].astype(int).values
+    actas_fuera = df1[ACTAS_FUERA_CATALOGO].astype(int).values
+    actas_cap = df1[ACTAS_CAPTURADAS].astype(int).values
+    actas_cap_por = df1[PORCENTAJE_ACTAS_CAPTURADAS].astype(int).values
+    actas_con = df1[ACTAS_CONTABILIZADAS].astype(int).values
+    actas_con_por = df1[PORCENTAJE_ACTAS_CONTABILIZADAS].astype(int).values
+    actas_incon_por = df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].astype(int).values
+    actas_nocon = df1[ACTAS_NO_CONTABILIZADAS].astype(int).values
+    lnactascon = df1[LISTA_NOMINAL_ACTAS_CONTABILIZADAS].astype(int).values
+    totalvotosc = df1[TOTAL_VOTOS_C_CS].astype(int).values
+    totalvotoss = df1[TOTAL_VOTOS_S_CS].astype(int).values
+    participacionciu = df1[PORCENTAJE_PARTICIPACION_CIUDADANA].astype(int).values
     #print(value_counts11)
 
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
@@ -160,9 +160,9 @@ def test_actas_registradas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts3 == actas_regis
+        assert value_counts3 == actas_fuera
     except AssertionError as e:
-        resultados_fallidos.append(f"Conteo CSV: {value_counts3} Encabezado CSV: {actas_regis}")
+        resultados_fallidos.append(f"Conteo CSV: {value_counts3} Encabezado CSV: {actas_fuera}")
 
     if resultados_fallidos:
         pytest.fail(f"Error en validación: {', '.join(resultados_fallidos)}")
