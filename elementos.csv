@@ -6,4 +6,3 @@ Validación de número de actas capturadas en Estadística Nacional,ACTAS_CAPTUR
 Validación de número de actas contabilizadas en Estadística Nacional,ACTAS_CONTABILIZADAS,By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[2]/p[1]/strong
 Validacion de Votos en Casillas Básicas Contiguas Extraordinarias y Mesas de Escrutinio,TOTAL_VOTOS_S_CS, By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[2]/div[2]/div/div[1]/div[2]/strong[1]
 Validacion de Total de Votos,TOTAL_VOTOS_C_CS, By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[2]/div[2]/div/div[3]/div[2]/div/div[2]/strong[1]
-Validacion de porcentaje de actas capturadas,PORCENTAJE_ACTAS_CAPTURADAS, By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[2]/p[2]/strong
