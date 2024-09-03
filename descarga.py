@@ -3,7 +3,6 @@ import zipfile
 import os
 import pytest
 import allure
-import pandas as pd
 
 url = 'https://prep2024.ine.mx/publicacion/nacional/assets/20240603_2005_PREP.zip'
 nombre_archivo = '20240603_2005_PREP.zip'
@@ -37,10 +36,7 @@ print(f'Archivo ZIP "{archivo_zip1}" descomprimido exitosamente en "{directorio_
 def directorio_destino():
     return "/var/jenkins_home/workspace/Publicacion/Archivos"
 
-@pytest.mark.parametrize("archivo_zip, archivos_esperados", [
-    ("20240603_2005_PREP_PRES.zip", ["PRES_2024.csv", "PRES_CANDIDATURAS_2024.csv"]),
-    # Agrega aquí más tuplas (archivo_zip, archivos_esperados) si quieres probar varios
-])
+@pytest.mark.parametrize("archivo_zip, archivos_esperados", [("20240603_2005_PREP_PRES.zip", ["PRES_2024.csv", "PRES_CANDIDATURAS_2024.csv"]),])
 @allure.feature('Descarga de CSV Presidencia')  
 @allure.story('Descompresion de CSV')  
 @allure.tag('prioridad:alta', 'tipo:funcional')
