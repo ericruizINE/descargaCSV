@@ -64,12 +64,6 @@ def test_descomprimir_archivo(archivo_zip, archivos_esperados, directorio_destin
         ruta_completa = os.path.join(directorio_destino, archivo)
         if os.path.exists(ruta_completa):
             allure.attach.file(ruta_completa, name=f"Archivo CSV: {archivo}", attachment_type=allure.attachment_type.CSV)
-            
-            # Crear un resumen del CSV
-            with allure.step(f"Generando resumen para {archivo}"):
-                df = pd.read_csv(ruta_completa)
-                resumen = f"Resumen de {archivo}:\n  Número de filas: {len(df)}\n  Número de columnas: {len(df.columns)}"
-                allure.attach(resumen, name=f"Resumen de {archivo}", attachment_type=allure.attachment_type.TEXT)
         else:
             pytest.fail(f"El archivo CSV {archivo} no se encontró en el directorio de destino.")
 
