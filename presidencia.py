@@ -160,7 +160,7 @@ def test_actas_registradas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts3.equals(actas_regis), "Los valores no coinciden"
+        assert value_counts3 == actas_regis
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts3} Encabezado CSV: {actas_regis}")
 
@@ -220,7 +220,7 @@ def test_actas_capturadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts4.equals(actas_cap), "Los valores no coinciden"
+        assert value_counts4 == actas_cap
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts4} Encabezado CSV: {actas_cap}")
 
@@ -250,7 +250,7 @@ def test_actas_porcentaje_capturadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts5.equals(actas_cap_por), "Los valores no coinciden"
+        assert value_counts5 == actas_cap_por
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts5} Encabezado CSV: {actas_cap_por}")
 
@@ -280,6 +280,7 @@ def test_actas_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
+        #assert value_counts == actas_con
         assert value_counts.equals(actas_con), "Los valores no coinciden"
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts} Encabezado CSV: {actas_con}")
@@ -311,7 +312,7 @@ def test_actas_porcentaje_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts6.equals(actas_con_por), "Los valores no coinciden"
+        assert value_counts6 == actas_con_por
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts6} Encabezado CSV: {actas_con_por}")
 
@@ -341,7 +342,7 @@ def test_actas_porcentaje_inconsistencias_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts7.equals(actas_incon_por), "Los valores no coinciden"
+        assert value_counts7 == actas_incon_por
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts7} Encabezado CSV: {actas_incon_por}")
 
@@ -371,7 +372,7 @@ def test_actas_no_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts2.equals(actas_nocon), "Los valores no coinciden"
+        assert value_counts2 == actas_nocon
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts2} Encabezado CSV: {actas_nocon}")
 
@@ -401,7 +402,7 @@ def test_lista_nominal_actas_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts8.equals(lnactascon), "Los valores no coinciden"
+        assert value_counts8 == lnactascon
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts8} Encabezado CSV: {lnactascon}")
 
@@ -431,7 +432,7 @@ def test_total_votos_c_cs_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts10.equals(totalvotosc), "Los valores no coinciden"
+        assert value_counts10 == totalvotosc
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts10} Encabezado CSV: {totalvotosc}")
 
@@ -461,7 +462,7 @@ def test_total_votos_s_cs_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts11.equals(totalvotoss), "Los valores no coinciden"
+        assert value_counts11 == totalvotoss
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts11} Encabezado CSV: {totalvotoss}")
 
@@ -491,7 +492,7 @@ def test_porcentaje_participacion_ciudadana_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts9.equals(participacionciu), "Los valores no coinciden"
+        assert value_counts9 == participacionciu
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts9} Encabezado CSV: {participacionciu}")
 
