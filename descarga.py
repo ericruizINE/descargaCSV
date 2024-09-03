@@ -35,7 +35,6 @@ else:
 
 @pytest.fixture
 def directorio_destino():
-    # Define la ruta de la carpeta donde almacenarás las capturas de pantalla
     return "/var/jenkins_home/workspace/Publicacion/Archivos"
 
 @pytest.mark.parametrize("archivo_zip", [
@@ -61,7 +60,7 @@ def test_descomprimir_archivo(archivo_zip, directorio_destino):
             zip_ref.extractall(directorio_destino)
 
     # Verificar si la descompresión fue exitosa
-    archivo_descomprimido = os.path.join(directorio_destino, "nombre_archivo_descomprimido")  # Adapta el nombre según el contenido del ZIP
+    archivo_descomprimido = os.path.join(directorio_destino, "PRES_2024.csv")  
     assert os.path.exists(archivo_descomprimido), f"El archivo {archivo_descomprimido} no se descomprimió correctamente"
 
     # Agregar información al reporte de Allure
