@@ -133,7 +133,8 @@ def screenshots_folder():
 @allure.feature('Validación de datos en sitio de Publicación')
 def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screenshots_folder):
     """
-    Prueba que los valores del encabezado del CSV coincidan con el sitio de publicacion: https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura
+    Prueba que los valores del encabezado del CSV coincidan con el sitio de publicacion: 
+    https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura
     """
     # Aplicar la etiqueta @allure.story dinámicamente
     allure.dynamic.story(allure_story)  # Etiqueta dinámica basada en el CSV
@@ -150,11 +151,8 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
     elemento = driver.find_element(locator_type_obj, ruta)
     valor_en_pagina = elemento.text
 
-    file_path = get_next_screenshot_path(screenshots_folder, 'actas_esperadas_avance_nacional')
+    file_path = get_next_screenshot_path(screenshots_folder, 'captura_elemento')
     capture_element_screenshot(driver, elemento, file_path)
-
-    #file_path2 = get_next_screenshot_path(screenshots_folder, 'pagina_completa')
-    #capture_full_page_screenshot(driver, file_path2)
     
     with allure.step("Comparando los valores de sitio vs csv"):
         if valor_en_pagina == valor_csv:
@@ -169,12 +167,6 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
                     name="Captura de pantalla del elemento",
                     attachment_type=allure.attachment_type.PNG
                 )
-            # with open(file_path2, "rb") as image_file:
-            #     allure.attach(
-            #         image_file.read(),
-            #         name="Captura de pantalla completa",
-            #         attachment_type=allure.attachment_type.PNG
-            #     )
         else:
             allure.attach(
                 f"Los valores no coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
@@ -187,19 +179,12 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
                     name="Captura de pantalla del error",
                     attachment_type=allure.attachment_type.PNG
                 )
-            # with open(file_path2, "rb") as image_file:
-            #     allure.attach(
-            #         image_file.read(),
-            #         name="Captura de pantalla completa",
-            #         attachment_type=allure.attachment_type.PNG
-            #     )
-        # Asegúrate de que la excepción de pytest ocurra después de la adjunta de Allure
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
         assert valor_en_pagina == valor_csv
     except AssertionError as e:
-        resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: valor_csv")
+        resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: {valor_csv}")
 
     if resultados_fallidos:
-        pytest.fail(f"Errores en validaciones: {', '.join(resultados_fallidos)}")
+        pytest.fail(f"Error en validación: {', '.join(resultados_fallidos)}")
