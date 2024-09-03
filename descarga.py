@@ -37,50 +37,42 @@ else:
 def directorio_destino():
     return "/var/jenkins_home/workspace/Publicacion/Archivos"
 
-@pytest.mark.parametrize("archivo_zip", [
-    "20240603_2005_PREP.zip",
-    # Agrega aquí más nombres de archivos si quieres probar varios
+@pytest.mark.parametrize("archivo_zip, archivos_esperados", [
+    ("20240603_2005_PREP.zip", ["PRES_2024.csv", "PRES_CANDIDATURAS_2024.csv"]),
+    # Agrega aquí más tuplas (archivo_zip, archivos_esperados) si quieres probar varios
 ])
-@allure.feature('Descarga de CSV Presidencia')  # Usa etiquetas estándar de Allure
-@allure.story('Descompresion de CSV')  # Usa etiquetas estándar de Allure
+@allure.feature('Descarga de CSV Presidencia')  
+@allure.story('Descompresion de CSV')  
 @allure.tag('prioridad:alta', 'tipo:funcional')
-def test_descomprimir_archivo(archivo_zip, directorio_destino):
+def test_descomprimir_archivo(archivo_zip, archivos_esperados, directorio_destino):
     """
-    Prueba la descompresión de un archivo ZIP.
+    Prueba la descompresión de un archivo ZIP y la existencia de archivos CSV.
 
     Args:
         archivo_zip: Nombre del archivo ZIP a descomprimir.
+        archivos_esperados: Lista de nombres de archivos CSV esperados tras la descompresión.
         directorio_destino: Directorio donde se descomprimirá el archivo.
     """
-
-    archivo_zip1 = os.path.join(f"{directorio_destino}/{archivo_zip}")
+    archivo_zip_path = os.path.join(directorio_destino, archivo_zip)
 
     with allure.step("Descomprimiendo archivo ZIP"):
-        with zipfile.ZipFile(archivo_zip1, 'r') as zip_ref:
+        with zipfile.ZipFile(archivo_zip_path, 'r') as zip_ref:
             zip_ref.extractall(directorio_destino)
 
-    # Verificar si la descompresión fue exitosa
-    archivo_descomprimido = os.path.join(directorio_destino, "20240603_2005_PREP.zip")  
-    assert os.path.exists(archivo_descomprimido), f"El archivo {archivo_descomprimido} no se descomprimió correctamente"
-
-    # Agregar información al reporte de Allure
-    allure.attach(archivo_zip1, name="Archivo ZIP", attachment_type=allure.attachment_type.ZIP)
-    allure.attach(f"El archivo ZIP {archivo_zip1} se descomprimió exitosamente en {directorio_destino}", name="Resultado", attachment_type=allure.attachment_type.TEXT)
-    
-    # Archivos CSV a adjuntar
-    archivos_csv = ["PRES_2024.csv", "PRES_CANDIDATURAS_2024.csv"]
-
-    for archivo in archivos_csv:
+    # Verificar y adjuntar los archivos descomprimidos
+    for archivo in archivos_esperados:
         ruta_completa = os.path.join(directorio_destino, archivo)
         if os.path.exists(ruta_completa):
-            # Adjuntar el archivo CSV al reporte
             allure.attach.file(ruta_completa, name=f"Archivo CSV: {archivo}", attachment_type=allure.attachment_type.CSV)
-
+            
             # Opcional: Crear un resumen del CSV
-            df = pd.read_csv(ruta_completa)
-            resumen = f"Resumen de {archivo}:\n"
-            resumen += f"  Número de filas: {len(df)}\n"
-            resumen += f"  Número de columnas: {len(df.columns)}\n"
-            allure.attach(resumen, name=f"Resumen de {archivo}", attachment_type=allure.attachment_type.TEXT)
+            with allure.step(f"Generando resumen para {archivo}"):
+                df = pd.read_csv(ruta_completa)
+                resumen = f"Resumen de {archivo}:\n  Número de filas: {len(df)}\n  Número de columnas: {len(df.columns)}"
+                allure.attach(resumen, name=f"Resumen de {archivo}", attachment_type=allure.attachment_type.TEXT)
         else:
-            allure.attach(f"El archivo CSV {archivo} no se encontró en el directorio de destino.", name="Error", attachment_type=allure.attachment_type.TEXT)
+            pytest.fail(f"El archivo CSV {archivo} no se encontró en el directorio de destino.")
+
+    # Adjuntar la información de éxito general
+    allure.attach(f"El archivo ZIP {archivo_zip} se descomprimió exitosamente en {directorio_destino}", 
+                  name="Resultado de descompresión", attachment_type=allure.attachment_type.TEXT)
