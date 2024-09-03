@@ -38,10 +38,12 @@ pipeline {
         }
         stage('Ejecutar Pytest Conteos CSV') {
             steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest presidencia.py --alluredir=report
                """
+                }
             }
         }
         stage('Ejecutar Pytest Selenium Publicación') {

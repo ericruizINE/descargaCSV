@@ -137,6 +137,11 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     participacionciu = df1[PORCENTAJE_PARTICIPACION_CIUDADANA].values
     #print(value_counts11)
 
+if np.array_equal(value_counts3, df1[ACTAS_REGISTRADAS].values):
+    print("[green]2.- Los valores de ACTAS_REGISTRADAS coinciden:[/green]", df1[ACTAS_REGISTRADAS].values)
+else:
+    print("[red]2.- Los valores de ACTAS_REGISTRADAS no coinciden.[/red]", df1[ACTAS_REGISTRADAS].values, "vs", value_counts3)
+
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
 @allure.story('2.- Validación de Actas Registradas')  # Usa etiquetas estándar de Allure
 @allure.tag('prioridad:alta', 'tipo:funcional')
