@@ -56,7 +56,7 @@ def capture_element_screenshot(driver, element, file_path):
     # Establecer el tamaño de la ventana al tamaño total de la página
     driver.set_window_size(total_width, total_height)
     # Resaltar el elemento usando JavaScript
-    driver.execute_script("arguments[0].style.border='3px solid red'", element)
+    driver.execute_script("arguments[0].style.border='9px solid red'", element)
     
     # Desplazar la página hasta que el elemento esté visible
     driver.execute_script("arguments[0].scrollIntoView();", element)
@@ -70,7 +70,7 @@ def capture_element_screenshot(driver, element, file_path):
     driver.save_screenshot(file_path)
 
     # Quitar el borde después de la captura
-    #driver.execute_script("arguments[0].style.border=''", element)
+    driver.execute_script("arguments[0].style.border=''", element)
 
 # Función para leer datos desde el CSV y eliminar el BOM si está presente
 def leer_datos_csv(filepath):
