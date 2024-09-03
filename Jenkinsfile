@@ -76,12 +76,8 @@ pipeline {
     }
     post {
         always {
-            allure includeProperties: false, jdk: '', reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-results']]
-        }
-    }
-    post {
-        always {
             script {
+                allure includeProperties: false, jdk: '', reportBuildPolicy: 'ALWAYS', results: [[path: 'allure-results']]
                 // Publica la URL del reporte en la consola de Jenkins
                 def allureReportUrl = "${env.BUILD_URL}allure"
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
