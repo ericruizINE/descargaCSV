@@ -53,7 +53,7 @@ def capture_element_screenshot(driver, element, file_path):
     driver.execute_script("arguments[0].style.border='3px solid red'", element)
     
     # Desplazar la página hasta que el elemento esté visible
-    driver.execute_script("window.scrollTo(0, arguments[0].getBoundingClientRect().top + window.scrollY - 100);", element)
+    driver.execute_script("arguments[0].scrollIntoView();", element)
 
     # Esperar a que el elemento sea visible
     WebDriverWait(driver, 10).until(
@@ -64,7 +64,7 @@ def capture_element_screenshot(driver, element, file_path):
     driver.save_screenshot(file_path)
 
     # Quitar el borde después de la captura
-    driver.execute_script("arguments[0].style.border=''", element)
+    #driver.execute_script("arguments[0].style.border=''", element)
 
 # Función para leer datos desde el CSV y eliminar el BOM si está presente
 def leer_datos_csv(filepath):
