@@ -26,17 +26,25 @@ if respuesta.status_code == 200:
 else:
     print(f'Error al descargar: {respuesta.status_code}')
     
-archivo_zip1 = os.path.join(f"{directorio_destino}/20240603_2005_PREP.zip")  # Nombre del archivo ZIP a descomprimir
-# Descomprimir el archivo ZIP
-with zipfile.ZipFile(archivo_zip1, 'r') as zip_ref:
-    zip_ref.extractall(directorio_destino)
+# archivo_zip1 = os.path.join(f"{directorio_destino}/20240603_2005_PREP.zip")  # Nombre del archivo ZIP a descomprimir
+# # Descomprimir el archivo ZIP
+# with zipfile.ZipFile(archivo_zip1, 'r') as zip_ref:
+#     zip_ref.extractall(directorio_destino)
 
-print(f'Archivo ZIP "{archivo_zip1}" descomprimido exitosamente en "{directorio_destino}"')
+# print(f'Archivo ZIP "{archivo_zip1}" descomprimido exitosamente en "{directorio_destino}"')
+
+@pytest.fixture
+def directorio_destino():
+    # Define la ruta de la carpeta donde almacenarás las capturas de pantalla
+    return "/var/jenkins_home/workspace/Publicacion/Archivos"
 
 @pytest.mark.parametrize("archivo_zip", [
     "20240603_2005_PREP.zip",
     # Agrega aquí más nombres de archivos si quieres probar varios
 ])
+@allure.feature('Descarga de CSV Presidencia')  # Usa etiquetas estándar de Allure
+@allure.story('Descompresion de CSV')  # Usa etiquetas estándar de Allure
+@allure.tag('prioridad:alta', 'tipo:funcional')
 def test_descomprimir_archivo(archivo_zip, directorio_destino):
     """
     Prueba la descompresión de un archivo ZIP.
