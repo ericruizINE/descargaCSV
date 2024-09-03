@@ -126,15 +126,15 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     actas_regis = df1[ACTAS_REGISTRADAS].astype(int).values
     actas_fuera = df1[ACTAS_FUERA_CATALOGO].astype(int).values
     actas_cap = df1[ACTAS_CAPTURADAS].astype(int).values
-    actas_cap_por = df1[PORCENTAJE_ACTAS_CAPTURADAS].astype(int).values
-    actas_con = int(df1['ACTAS_CONTABILIZADAS'].iloc[0]) 
-    actas_con_por = float(df1['PORCENTAJE_ACTAS_CONTABILIZADAS'].iloc[0])
-    actas_incon_por = df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].astype(int).values
+    actas_cap_por = df1[PORCENTAJE_ACTAS_CAPTURADAS].astype(float).values
+    actas_con = df1[ACTAS_CONTABILIZADAS].astype(int).values
+    actas_con_por = df1[PORCENTAJE_ACTAS_CONTABILIZADAS].astype(float).values
+    actas_incon_por = df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].astype(float).values
     actas_nocon = df1[ACTAS_NO_CONTABILIZADAS].astype(int).values
     lnactascon = df1[LISTA_NOMINAL_ACTAS_CONTABILIZADAS].astype(int).values
     totalvotosc = df1[TOTAL_VOTOS_C_CS].astype(int).values
     totalvotoss = df1[TOTAL_VOTOS_S_CS].astype(int).values
-    participacionciu = df1[PORCENTAJE_PARTICIPACION_CIUDADANA].astype(int).values
+    participacionciu = df1[PORCENTAJE_PARTICIPACION_CIUDADANA].astype(float).values
     #print(value_counts11)
 
 @allure.feature('Validación de datos CSV Publicación')  # Usa etiquetas estándar de Allure
@@ -250,7 +250,7 @@ def test_actas_porcentaje_capturadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts5.equals(actas_cap_por)
+        assert value_counts5 == actas_cap_por
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts5} Encabezado CSV: {actas_cap_por}")
 
@@ -280,7 +280,8 @@ def test_actas_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts == actas_con
+        #assert value_counts == actas_con
+        assert value_counts.equals(actas_con), "Los valores no coinciden"
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts} Encabezado CSV: {actas_con}")
 
@@ -311,9 +312,9 @@ def test_actas_porcentaje_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts6 == float(df1['PORCENTAJE_ACTAS_CONTABILIZADAS'].iloc[0])
+        assert value_counts6 == actas_con_por
     except AssertionError as e:
-        resultados_fallidos.append(f"Conteo CSV: {value_counts6} Encabezado CSV: {float(df1['PORCENTAJE_ACTAS_CONTABILIZADAS'].iloc[0])}")
+        resultados_fallidos.append(f"Conteo CSV: {value_counts6} Encabezado CSV: {actas_con_por}")
 
     if resultados_fallidos:
         pytest.fail(f"Error en validación: {', '.join(resultados_fallidos)}")
@@ -341,7 +342,7 @@ def test_actas_porcentaje_inconsistencias_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts7.equals(actas_incon_por)
+        assert value_counts7 == actas_incon_por
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts7} Encabezado CSV: {actas_incon_por}")
 
@@ -371,7 +372,7 @@ def test_actas_no_contabilizadas_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-        assert value_counts2.equals(actas_nocon)
+        assert value_counts2 == actas_nocon
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts2} Encabezado CSV: {actas_nocon}")
 
@@ -491,7 +492,7 @@ def test_porcentaje_participacion_ciudadana_coinciden():
     # Manejo de excepciones para múltiples validaciones
     resultados_fallidos = []
     try:
-         assert value_counts9.equals(participacionciu)
+        assert value_counts9 == participacionciu
     except AssertionError as e:
         resultados_fallidos.append(f"Conteo CSV: {value_counts9} Encabezado CSV: {participacionciu}")
 
