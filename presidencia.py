@@ -127,9 +127,8 @@ if TOTAL_VOTOS_CALCULADO in df.columns and TIPO_CASILLA in df.columns:
     actas_fuera = df1[ACTAS_FUERA_CATALOGO].astype(int).values
     actas_cap = df1[ACTAS_CAPTURADAS].astype(int).values
     actas_cap_por = df1[PORCENTAJE_ACTAS_CAPTURADAS].astype(int).values
-    actas_con = df1[ACTAS_CONTABILIZADAS].astype(int).values
-    actas_con = [actas_con]
-    actas_con_por = int(df1['PORCENTAJE_ACTAS_CONTABILIZADAS'].iloc[0])
+    actas_con = int(df1['ACTAS_CONTABILIZADAS'].iloc[0]) 
+    actas_con_por = df1[PORCENTAJE_ACTAS_CONTABILIZADAS].astype(int).values
     actas_incon_por = df1[PORCENTAJE_ACTAS_INCONSISTENCIAS].astype(int).values
     actas_nocon = df1[ACTAS_NO_CONTABILIZADAS].astype(int).values
     lnactascon = df1[LISTA_NOMINAL_ACTAS_CONTABILIZADAS].astype(int).values
