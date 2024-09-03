@@ -65,7 +65,7 @@ def test_descomprimir_archivo(archivo_zip, directorio_destino):
 
     # Agregar información al reporte de Allure
     allure.attach(archivo_zip1, name="Archivo ZIP", attachment_type=allure.attachment_type.ZIP)
-    allure.attach(f"El archivo ZIP {archivo_zip1} se descomprimió exitosamente en {directorio_destino}", name="Resultado")
+    allure.attach(f"El archivo ZIP {archivo_zip1} se descomprimió exitosamente en {directorio_destino}", name="Resultado", attachment_type=allure.attachment_type.TEXT)
     
     # Archivos CSV a adjuntar
     archivos_csv = ["PRES_2024.csv", "PRES_CANDIDATURAS_2024.csv"]
