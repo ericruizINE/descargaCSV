@@ -51,7 +51,6 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    set -e
                     pytest pytestpublicsv.py --alluredir=report
                """
                 }
