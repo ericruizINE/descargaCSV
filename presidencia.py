@@ -322,13 +322,13 @@ def test_actas_no_contabilizadas_coinciden():
     with allure.step("Comparando los valores de ACTAS_NO_CONTABILIZADAS con los esperados"):
         if np.array_equal(value_counts2, actas_nocon):
             allure.attach(
-                f"Los valores de ACTAS_NO_CONTABILIZADAS coinciden: Conteo CSV: {value_counts2} Encabezado CSV: {actas_nocon",
+                f"Los valores de ACTAS_NO_CONTABILIZADAS coinciden: Conteo CSV: {value_counts2} Encabezado CSV: {actas_nocon}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
         else:
             allure.attach(
-                f"Los valores de ACTAS_NO_CONTABILIZADAS no coinciden. Conteo CSV: {value_counts2} Encabezado CSV: {actas_nocon",
+                f"Los valores de ACTAS_NO_CONTABILIZADAS no coinciden. Conteo CSV: {value_counts2} Encabezado CSV: {actas_nocon}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
@@ -397,13 +397,13 @@ def test_total_votos_s_cs_coinciden():
     with allure.step("Comparando los valores de TOTAL_VOTOS_S_CS con los esperados"):
         if np.array_equal(value_counts11, totalvotoss):
             allure.attach(
-                f"Los valores de TOTAL_VOTOS_S_CS coinciden: Conteo CSV: {value_counts11} Encabezado CSV: {totalvotoss",
+                f"Los valores de TOTAL_VOTOS_S_CS coinciden: Conteo CSV: {value_counts11} Encabezado CSV: {totalvotoss}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
         else:
             allure.attach(
-                f"Los valores de TOTAL_VOTOS_S_CS no coinciden. Conteo CSV: {value_counts11} Encabezado CSV: {totalvotoss",
+                f"Los valores de TOTAL_VOTOS_S_CS no coinciden. Conteo CSV: {value_counts11} Encabezado CSV: {totalvotoss}",
                 name="Resultado de la validación",
                 attachment_type=allure.attachment_type.TEXT
             )
