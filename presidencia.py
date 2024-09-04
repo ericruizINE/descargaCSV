@@ -158,9 +158,9 @@ def test_actas_registradas_coinciden():
                 attachment_type=allure.attachment_type.TEXT
             )
         try:
-            assert np.array_equal(value_counts3, actas_regis)
+            assert np.array_equal(value_counts3, actas_fuera)
         except AssertionError:
-            pytest.fail(f"Los valores no coinciden. Conteo CSV: {value_counts3} Encabezado CSV: {actas_regis}")
+            pytest.fail(f"Los valores no coinciden. Conteo CSV: {value_counts3} Encabezado CSV: {actas_fuera}")
 
 if np.array_equal(value_counts1, actas_fuera):
     print("[green]3.- Los valores de ACTAS_FUERA_CATALOGO coinciden:[/green]", actas_fuera)
