@@ -116,7 +116,7 @@ def screenshots_folder():
     # Define la ruta de la carpeta donde almacenarás las capturas de pantalla
     return "screenshots_publi"
 
-@pytest.mark.parametrize("allure_story, valor, selector, ruta", leer_datos_csv('elementos.csv'))
+@pytest.mark.parametrize("allure_story, valor, tipo_dato, selector, ruta", leer_datos_csv('elementos.csv'))
 @allure.feature('Validación de datos en sitio de Publicación')
 def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, ruta, screenshots_folder):
     """
