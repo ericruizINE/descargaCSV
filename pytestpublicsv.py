@@ -134,7 +134,7 @@ def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, r
     if tipo_dato == 'int':
         valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
     elif tipo_dato == 'float':
-        valor_csv = "{:,.4f} %".format(float(df[valor].iloc[0]))
+        valor_csv = "{:,.4f}".format(float(df[valor].iloc[0]))
     else:
         pytest.fail(f"Tipo de dato no reconocido: {tipo_dato}")
 
@@ -144,7 +144,8 @@ def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, r
     try:
         driver = setup
         elemento = driver.find_element(locator_type_obj, ruta)
-        valor_en_pagina = elemento.text
+        valor_en_pagina2 = elemento.text
+        valor_en_pagina = re.sub(r'[^\d.]', '', valor_en_pagina2)
 
         file_path = get_next_screenshot_path(screenshots_folder, 'captura_elemento')
         capture_element_screenshot(driver, elemento, file_path)
