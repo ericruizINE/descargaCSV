@@ -64,7 +64,7 @@ def leer_datos_csv(filepath):
     df = pd.read_csv(filepath, encoding='utf-8-sig')
 
     for index, row in df.iterrows():
-        yield row['allure_story'], row['valor'], row['selector'], row['ruta']
+        yield row['allure_story'], row['valor'], row['tipo_dato'], row['selector'], row['ruta']
 
 @pytest.fixture
 def setup():
