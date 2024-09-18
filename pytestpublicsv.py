@@ -118,7 +118,7 @@ def screenshots_folder():
 
 @pytest.mark.parametrize("allure_story, valor, selector, ruta", leer_datos_csv('elementos.csv'))
 @allure.feature('Validación de datos en sitio de Publicación')
-def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screenshots_folder):
+def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, ruta, screenshots_folder):
     """
     Prueba que los valores del encabezado del CSV coincidan con el sitio de publicacion: 
     https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura
@@ -129,7 +129,14 @@ def test_validacion_datos(setup, df, allure_story, valor, selector, ruta, screen
     # Establecer un título dinámico para la prueba
     allure.dynamic.title(allure_story)
 
-    valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
+    #valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
+    # Validar el formato según el tipo de dato
+    if tipo_dato == 'int':
+        valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
+    elif tipo_dato == 'float':
+        valor_csv = "{:,.3f}".format(float(df[valor].iloc[0]))
+    else:
+        pytest.fail(f"Tipo de dato no reconocido: {tipo_dato}")
 
     # Convertir el tipo de localizador a su objeto correspondiente de Selenium
     locator_type_obj = eval(selector)
