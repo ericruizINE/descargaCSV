@@ -134,7 +134,7 @@ def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, r
     if tipo_dato == 'int':
         valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
     elif tipo_dato == 'float':
-        valor_csv = "{:,.3f}".format(float(df[valor].iloc[0]))
+        valor_csv = "{:,.4f}".format(float(df[valor].iloc[0]))
     else:
         pytest.fail(f"Tipo de dato no reconocido: {tipo_dato}")
 
