@@ -1,7 +1,7 @@
 ﻿allure_story,valor,tipo_dato,selector,ruta
 Validación de número de actas capturadas en Avance Nacional,ACTAS_CAPTURADAS,int,By.XPATH,/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong
 Validacion de Porcentaje de Participacion ciudadadana en Avance nacional,PORCENTAJE_PARTICIPACION_CIUDADANA,float,By.XPATH,/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[4]/div/div[2]/div/p[1]/strong
-Validacion de Porcentaje de Actas capturadas en Avance nacional,PORCENTAJE_ACTAS_CAPTURADAS,float,By.XPATH,/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[4]/div/div[2]/div/p[1]/strong
+Validacion de Porcentaje de Actas capturadas en Avance nacional,PORCENTAJE_ACTAS_CAPTURADAS,float,By.XPATH,/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[3]
 Validación de número de actas esperadas en Estadística Nacional,ACTAS_ESPERADAS,int,By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[1]/p[1]/strong
 Validacion de Lista Nominal de las casillas con Actas Contabilizadas,LISTA_NOMINAL_ACTAS_CONTABILIZADAS,int,By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[2]/div[1]/div[2]/div/div/div/div/div/span/div/span[2]
 Validación de número de actas capturadas en Estadística Nacional,ACTAS_CAPTURADAS,int,By.XPATH,/html/body/app-root/app-federal/div/div/div[3]/app-nacional/div/app-estadistica/div[1]/div[1]/div[2]/div[2]/p[1]/strong
