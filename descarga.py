@@ -49,6 +49,7 @@ def test_descomprimir_archivo(archivo_zip, archivos_esperados, directorio_destin
         archivos_esperados: Lista de nombres de archivos CSV esperados tras la descompresión.
         directorio_destino: Directorio donde se descomprimirá el archivo.
     """
+    app_version = os.getenv('APP_VERSION', '1.0.0')
     archivo_zip_path = os.path.join(directorio_destino, archivo_zip)
 
     with allure.step("Descomprimiendo archivo ZIP"):
@@ -66,3 +67,4 @@ def test_descomprimir_archivo(archivo_zip, archivos_esperados, directorio_destin
     # Adjuntar la información de éxito general
     allure.attach(f"El archivo ZIP {archivo_zip} se descomprimió exitosamente en {directorio_destino}", 
                   name="Resultado de descompresión", attachment_type=allure.attachment_type.TEXT)
+    allure.attach(app_version, name="Versión de la aplicación", attachment_type=allure.attachment_type.TEXT)
