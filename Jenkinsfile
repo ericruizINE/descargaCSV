@@ -28,6 +28,20 @@ pipeline {
                 """
             }
         }
+        stage('Preparar ambiente') {
+            steps {
+                script {
+                    // Generar archivo environment.properties con variables de entorno
+                    def alluredir = "report"
+                    sh "mkdir -p ${alluredir}"
+                    sh """
+                        echo 'APP_VERSION=${env.APP_VERSION}' >> ${alluredir}/environment.properties
+                        echo 'PLATFORM=${env.PLATFORM}' >> ${alluredir}/environment.properties
+                        echo 'BROWSER=${env.BROWSER}' >> ${alluredir}/environment.properties
+                    """
+                }
+            }
+        }
         stage('Descarga de Archivos CSV Presidencia') {
           steps {
             sh """
