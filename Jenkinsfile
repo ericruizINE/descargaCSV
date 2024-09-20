@@ -2,6 +2,9 @@ pipeline {
     agent any    
     environment {
         VENV_DIR = '/var/jenkins_home/workspace/Publicacion/venv'
+        APP_VERSION = '1.0.0'
+        PLATFORM = 'Linux'
+        BROWSER = 'Chrome'
     }
     stages {
         stage('Clean Up and Checkout ') {
