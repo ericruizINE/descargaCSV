@@ -83,6 +83,17 @@ pipeline {
                """
                 }
             }
+            post {
+                always {
+                    htmlPublisher target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: false,
+                        reportDir: '.',
+                        reportFiles: 'report.html'
+                    ]
+                }
+            }
         }
     }
     post {
@@ -92,7 +103,7 @@ pipeline {
                 // Publica la URL del reporte en la consola de Jenkins
                 def allureReportUrl = "${env.BUILD_URL}allure"
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
-                def reportpy = "${env.BUILD_URL}/execution/node/3/ws/tests/report.html"
+                def reportpy = "${env.BUILD_URL}execution/node/3/ws/tests/report.html"
                 echo "El reporte de Reporte PYTest está disponible en: ${reportpy}"
             }
         }
