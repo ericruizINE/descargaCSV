@@ -95,18 +95,6 @@ pipeline {
                 def reportpy = "${env.BUILD_URL}/execution/node/3/ws/tests/report.html"
                 echo "El reporte de Reporte PYTest está disponible en: ${reportpy}"
             }
-            success {
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: false,
-                    reportDir: 'Reports',
-                    reportFiles: 'Report.html',
-                    reportName: 'PyTest HTML Report',
-                    reportTitles: '',
-                    useWrapperFileDirectly: true
-                ])
-            }
         }
     }
 }
