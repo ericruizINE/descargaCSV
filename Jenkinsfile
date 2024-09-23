@@ -73,6 +73,16 @@ pipeline {
                 }
             }
         }
+        stage('Ejecutar Pytest Selenium POM') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh """
+                    cd tests
+                    pytest --html=report.html -s
+               """
+                }
+            }
+        }
     }
     post {
         always {
@@ -82,6 +92,18 @@ pipeline {
                 def allureReportUrl = "${env.BUILD_URL}allure"
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
             }
+            success {
+          publishHTML([
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'Reports',
+            reportFiles: 'Report.html',
+            reportName: 'PyTest HTML Report',
+            reportTitles: '',
+            useWrapperFileDirectly: true
+          ])
+        }
         }
     }
 }
