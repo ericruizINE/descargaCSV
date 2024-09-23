@@ -77,6 +77,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     cd tests
                     pytest --html=report.html -s
                """
@@ -93,17 +94,17 @@ pipeline {
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
             }
             success {
-          publishHTML([
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: false,
-            reportDir: 'Reports',
-            reportFiles: 'Report.html',
-            reportName: 'PyTest HTML Report',
-            reportTitles: '',
-            useWrapperFileDirectly: true
-          ])
-        }
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: false,
+                    reportDir: 'Reports',
+                    reportFiles: 'Report.html',
+                    reportName: 'PyTest HTML Report',
+                    reportTitles: '',
+                    useWrapperFileDirectly: true
+                ])
+            }
         }
     }
 }
