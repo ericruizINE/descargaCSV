@@ -1,6 +1,11 @@
 import pytest
 import chromedriver_autoinstaller
 from selenium import webdriver
+import base64  
+import os  
+import pytest  
+import pytest_html  
+from pytest_metadata.plugin import metadata_key  
 
 @pytest.fixture(scope="function")
 def setup():
@@ -26,3 +31,10 @@ def setup():
     yield driver  # Retorna el driver para usarlo en las pruebas
     
     driver.quit()  # Asegúrate de cerrar el navegador después de la prueba
+
+def pytest_html_report_title(report):  
+    report.title = "Reporte Pruebas de Publicación"  
+  
+  
+def pytest_configure(config):  
+    config.stash[metadata_key]["Project"] = "Pruebas Sitio Publicación y CSV"  

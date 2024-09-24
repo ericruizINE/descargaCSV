@@ -79,7 +79,7 @@ pipeline {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     cd tests
-                    pytest --html=report.html
+                    pytest --html=report.html --self-contained-html
                """
                 }
             }
