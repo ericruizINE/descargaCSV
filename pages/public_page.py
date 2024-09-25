@@ -14,12 +14,12 @@ class PublicPage(BasePage):
         if not os.path.exists(self.screenshots_folder):
             os.makedirs(self.screenshots_folder)
 
-    def get_next_screenshot_path(self, base_filename):
+    def get_next_screenshot_path(self, screenshots_folder, base_filename):
         """Genera el siguiente nombre de archivo disponible con un número consecutivo."""
         i = 1
         while True:
             filename = f"{base_filename}_{i:03d}.png"
-            path = os.path.join(self.screenshots_folder, filename)
+            path = os.path.join(screenshots_folder, filename)
             if not os.path.exists(path):
                 return path
             i += 1
