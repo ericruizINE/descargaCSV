@@ -78,8 +78,8 @@ def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, r
         else:
             pytest.fail(f"Tipo de dato no reconocido: {tipo_dato}")
 
-        file_path = PublicPage.get_next_screenshot_path('captura_elemento')
-        BasePage.capture_element_screenshot(elemento, file_path)
+        #file_path = PublicPage.get_next_screenshot_path('captura_elemento')
+        #BasePage.capture_element_screenshot(elemento, file_path)
         
         with allure.step("Comparando los valores de sitio vs csv"):
             if valor_en_pagina == valor_csv:
