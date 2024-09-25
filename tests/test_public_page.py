@@ -42,7 +42,7 @@ def screenshots_folder():
     return "screenshots_publi"
 
 @pytest.mark.parametrize("allure_story, valor, tipo_dato, selector, ruta", PublicPage.leer_datos_csv('elementos.csv'))
-@allure.feature('Validación de datos en sitio de Publicación')
+@allure.feature('Validación de datos en sitio de Publicación - POM')
 def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, ruta, screenshots_folder):
     """
     Prueba que los valores del encabezado del CSV coincidan con el sitio de publicacion: 
@@ -78,7 +78,7 @@ def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, r
         else:
             pytest.fail(f"Tipo de dato no reconocido: {tipo_dato}")
 
-        file_path = BasePage.get_next_screenshot_path('captura_elemento')
+        file_path = PublicPage.get_next_screenshot_path('captura_elemento')
         BasePage.capture_element_screenshot(elemento, file_path)
         
         with allure.step("Comparando los valores de sitio vs csv"):
