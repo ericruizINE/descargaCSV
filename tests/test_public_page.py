@@ -8,14 +8,6 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.public_page import PublicPage
 
-def test_capture_screenshot(setup):
-    driver = setup
-    public_page = PublicPage(driver)
-
-    # Capturar pantalla del elemento (usando el POM)
-    with allure.step("Capturar pantalla del resultado"):
-        public_page.highlight_and_capture_element('screenshots_publi')
-
 @pytest.fixture
 def df():
     # Leer el archivo CSV en un DataFrame
