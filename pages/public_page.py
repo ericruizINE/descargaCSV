@@ -24,9 +24,9 @@ class PublicPage(BasePage):
                 return path
             i += 1
 
-    def highlight_and_capture_element(self, screenshots_folder):
+    def highlight_and_capture_element(self, elemento, screenshots_folder):
         """Resalta y captura un elemento específico de la página pública."""
-        element = self.driver.find_element(By.XPATH, "/html/body/app-root/app-federal/div/div/div[1]/app-avance/div/div[3]/div/div/div/div[2]/strong")
+        element = elemento
         file_path = self.get_next_screenshot_path('captura_elemento')
         self.capture_element_screenshot(element, file_path)
         print(f"Captura de pantalla guardada en: {file_path}")
