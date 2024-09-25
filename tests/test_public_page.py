@@ -4,6 +4,7 @@ import re
 import pandas as pd
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.public_page import PublicPage
 
