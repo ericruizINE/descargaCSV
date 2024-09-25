@@ -1,0 +1,2 @@
+Versión chromedriver: 129.0.6668.59
+Captura de pantalla guardada en: screenshots_publi\captura_elemento_006.png

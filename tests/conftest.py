@@ -35,6 +35,5 @@ def setup():
 def pytest_html_report_title(report):  
     report.title = "Reporte Pruebas de Publicación"  
   
-  
 def pytest_configure(config):  
     config.stash[metadata_key]["Project"] = "Pruebas Sitio Publicación y CSV"  

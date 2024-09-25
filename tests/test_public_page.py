@@ -1,5 +1,9 @@
 import pytest
+import allure
+import re
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from pages.base_page import BasePage
 from pages.public_page import PublicPage
 
 def test_capture_screenshot(setup):
@@ -7,4 +11,86 @@ def test_capture_screenshot(setup):
     public_page = PublicPage(driver)
 
     # Capturar pantalla del elemento (usando el POM)
-    public_page.capture_element_screenshot(None, "element_screenshot")
+    with allure.step("Capturar pantalla del resultado"):
+        public_page.highlight_and_capture_element('screenshots_publi')
+
+@pytest.mark.parametrize("allure_story, valor, tipo_dato, selector, ruta", PublicPage.leer_datos_csv('elementos.csv'))
+@allure.feature('Validación de datos en sitio de Publicación')
+def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, ruta, screenshots_folder):
+    """
+    Prueba que los valores del encabezado del CSV coincidan con el sitio de publicacion: 
+    https://prep2024.ine.mx/publicacion/nacional/presidencia/nacional/candidatura
+    """
+    # Aplicar la etiqueta @allure.story dinámicamente
+    allure.dynamic.story(allure_story)  # Etiqueta dinámica basada en el CSV
+
+    # Establecer un título dinámico para la prueba
+    allure.dynamic.title(allure_story)
+
+    #valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
+    # Validar el formato según el tipo de dato
+    if tipo_dato == 'int':
+        valor_csv = "{:,.0f}".format(int(df[valor].iloc[0]))
+    elif tipo_dato == 'float':
+        valor_csv = "{:,.4f}".format(float(df[valor].iloc[0]))
+    else:
+        pytest.fail(f"Tipo de dato no reconocido: {tipo_dato}")
+
+    # Convertir el tipo de localizador a su objeto correspondiente de Selenium
+    locator_type_obj = eval(selector)
+    
+    try:
+        driver = setup
+        public_page = PublicPage(driver)
+        elemento = driver.find_element(locator_type_obj, ruta)
+        if tipo_dato == 'int':
+            valor_en_pagina = elemento.text
+        elif tipo_dato == 'float':
+            valor_en_pagina2 = elemento.text
+            valor_en_pagina = re.sub(r'[^\d.]', '', valor_en_pagina2)
+        else:
+            pytest.fail(f"Tipo de dato no reconocido: {tipo_dato}")
+
+        file_path = BasePage.get_next_screenshot_path('captura_elemento')
+        BasePage.capture_element_screenshot(elemento, file_path)
+        
+        with allure.step("Comparando los valores de sitio vs csv"):
+            if valor_en_pagina == valor_csv:
+                allure.attach(
+                    f"Los valores coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+                with open(file_path, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla del elemento",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+            else:
+                allure.attach(
+                    f"Los valores no coinciden, Sitio: {valor_en_pagina} CSV: {valor_csv}",
+                    name="Resultado de la validación",
+                    attachment_type=allure.attachment_type.TEXT
+                )
+                with open(file_path, "rb") as image_file:
+                    allure.attach(
+                        image_file.read(),
+                        name="Captura de pantalla del error",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+        # Manejo de excepciones para múltiples validaciones
+        resultados_fallidos = []
+        try:
+            assert valor_en_pagina == valor_csv
+        except AssertionError as e:
+            resultados_fallidos.append(f"Falló en: {allure_story} - Sitio: {valor_en_pagina} CSV: {valor_csv}")
+
+        if resultados_fallidos:
+            pytest.fail(f"Error en validación: {', '.join(resultados_fallidos)}")
+            
+    except NoSuchElementException:
+        # Manejar la excepción si el elemento no se encuentra
+        error_message = f"Elemento no encontrado: {selector} - {ruta}"
+        allure.attach(f"Error: {error_message}", name="NoSuchElementException", attachment_type=allure.attachment_type.TEXT)
+        pytest.fail(error_message)
