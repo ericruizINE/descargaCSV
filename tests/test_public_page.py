@@ -14,6 +14,26 @@ def test_capture_screenshot(setup):
     with allure.step("Capturar pantalla del resultado"):
         public_page.highlight_and_capture_element('screenshots_publi')
 
+@pytest.fixture
+def df():
+    # Leer el archivo CSV en un DataFrame
+    csv_path = '/var/jenkins_home/workspace/Publicacion/Archivos/PRES_2024.csv'
+    df = pd.read_csv(csv_path, skiprows=3, nrows=1, header=None, names=[
+        "ACTAS_ESPERADAS", "ACTAS_REGISTRADAS", "ACTAS_FUERA_CATALOGO", 
+        "ACTAS_CAPTURADAS", "PORCENTAJE_ACTAS_CAPTURADAS", 
+        "ACTAS_CONTABILIZADAS", "PORCENTAJE_ACTAS_CONTABILIZADAS", 
+        "PORCENTAJE_ACTAS_INCONSISTENCIAS", "ACTAS_NO_CONTABILIZADAS", 
+        "LISTA_NOMINAL_ACTAS_CONTABILIZADAS", "TOTAL_VOTOS_C_CS", 
+        "TOTAL_VOTOS_S_CS", "PORCENTAJE_PARTICIPACION_CIUDADANA"
+    ])
+
+    # Retornar solo las columnas necesarias en un nuevo DataFrame
+    selected_columns = df[[
+        "ACTAS_ESPERADAS", "ACTAS_CAPTURADAS", "ACTAS_CONTABILIZADAS", "LISTA_NOMINAL_ACTAS_CONTABILIZADAS", "TOTAL_VOTOS_C_CS", "TOTAL_VOTOS_S_CS", "PORCENTAJE_ACTAS_CAPTURADAS", "PORCENTAJE_PARTICIPACION_CIUDADANA"
+    ]]
+
+    return selected_columns
+
 @pytest.mark.parametrize("allure_story, valor, tipo_dato, selector, ruta", PublicPage.leer_datos_csv('elementos.csv'))
 @allure.feature('Validación de datos en sitio de Publicación')
 def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, ruta, screenshots_folder):
