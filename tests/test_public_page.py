@@ -82,6 +82,7 @@ def test_validacion_datos(setup, df, allure_story, valor, tipo_dato, selector, r
         #BasePage.capture_element_screenshot(elemento, file_path)
         #print(f"Captura de pantalla guardada en: {file_path}")
         public_page.highlight_and_capture_element(elemento, 'screenshots_publi')
+        file_path = screenshots_folder
         
         with allure.step("Comparando los valores de sitio vs csv"):
             if valor_en_pagina == valor_csv:
