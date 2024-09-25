@@ -1,1 +1,0 @@
-Versión chromedriver: 129.0.6668.59
