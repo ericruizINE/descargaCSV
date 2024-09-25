@@ -27,9 +27,11 @@ class PublicPage(BasePage):
     def highlight_and_capture_element(self, elemento, screenshots_folder):
         """Resalta y captura un elemento específico de la página pública."""
         element = elemento
-        file_path = self.get_next_screenshot_path('captura_elemento')
+        file_path = self.get_next_screenshot_path(screenshots_folder, 'captura_elemento')
         self.capture_element_screenshot(element, file_path)
         print(f"Captura de pantalla guardada en: {file_path}")
+        return file_path  # Retorna la ruta de la captura de pantalla
+        
 
     # Función para leer datos desde el CSV y eliminar el BOM si está presente
     def leer_datos_csv(filepath):
