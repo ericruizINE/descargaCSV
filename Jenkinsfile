@@ -81,7 +81,6 @@ pipeline {
                     cd tests
                     pytest --html=report.html --self-contained-html
                     pytest test_public_page.py --alluredir=report -v
-                    allure serve report
                     allure generate report -o report_html --clean
                """
                 }
