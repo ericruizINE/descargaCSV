@@ -46,7 +46,7 @@ class BasePage:
         # Capturar la pantalla completa
         self.driver.save_screenshot(file_path)
 
-        allure.attach(self.driver.get_screenshot_as_png(), name="Element Screenshot", attachment_type=AttachmentType.PNG)
+        #allure.attach(self.driver.get_screenshot_as_png(), name="Element Screenshot", attachment_type=AttachmentType.PNG)
 
         # Quitar el borde después de la captura
         self.driver.execute_script("arguments[0].style.border=''", element)
