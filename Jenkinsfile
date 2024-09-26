@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Generar archivo environment.properties con variables de entorno
-                    def alluredir = "tests/report"
+                    def alluredir = "report"
                     sh "mkdir -p ${alluredir}"
                     sh """
                         echo 'APP_VERSION=${env.APP_VERSION}' >> ${alluredir}/environment.properties
@@ -79,8 +79,7 @@ pipeline {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     cd tests
-                    pytest --html=report.html --self-contained-html 
-                    pytest test_public_page.py --alluredir=tests/report -v
+                    pytest --html=report.html --self-contained-html --alluredir=report
                """
                 }
             }
