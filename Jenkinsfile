@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Generar archivo environment.properties con variables de entorno
-                    def alluredir = "report"
+                    def alluredir = "tests/report"
                     sh "mkdir -p ${alluredir}"
                     sh """
                         echo 'APP_VERSION=${env.APP_VERSION}' >> ${alluredir}/environment.properties
