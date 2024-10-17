@@ -45,34 +45,34 @@ pipeline {
                 }
             }
         }
-        // stage('Descarga de Archivos CSV Presidencia') {
-        //   steps {
-        //     sh """
-        //             . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-        //             pytest descarga.py --alluredir=report
-        //        """
-        //   }
-        // }
-        // stage('Ejecutar Pytest Conteos CSV') {
-        //     steps {
-        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-        //         sh """
-        //             . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-        //             pytest presidencia.py --alluredir=report
-        //        """
-        //         }
-        //     }
-        // }
-        // stage('Ejecutar Pytest Selenium Publicación') {
-        //     steps {
-        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-        //         sh """
-        //             . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-        //             pytest pytestpublicsv.py --alluredir=report
-        //        """
-        //         }
-        //     }
-        // }
+        stage('Descarga de Archivos CSV Presidencia') {
+          steps {
+            sh """
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
+                    pytest descarga.py --alluredir=report
+               """
+          }
+        }
+        stage('Ejecutar Pytest Conteos CSV') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh """
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
+                    pytest presidencia.py --alluredir=report
+               """
+                }
+            }
+        }
+        stage('Ejecutar Pytest Selenium Publicación') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh """
+                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
+                    pytest pytestpublicsv.py --alluredir=report
+               """
+                }
+            }
+        }
         stage('Ejecutar Pytest Selenium POM') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
