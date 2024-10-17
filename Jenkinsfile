@@ -1,8 +1,5 @@
 pipeline {
-    agent {
-        label 'any'
-        customWorkspace '/var/jenkins_home/workspace/Publicacion' // Ruta específica del workspace
-    } 
+    agent any    
     environment {
         VENV_DIR = '/var/jenkins_home/workspace/Publicacion/venv'
         APP_VERSION = '1.0.0'
