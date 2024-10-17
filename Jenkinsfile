@@ -16,13 +16,10 @@ pipeline {
         }
         stage('Install & Setup venv') {
             steps {
-                sh 'apt-get update && apt-get install -y python3-venv python3-pip wget unzip default-jre'
+                // Instalar el paquete python3-venv si aún no está instalado
+                sh 'apt-get update && apt-get install -y python3-venv'
+                sh 'apt-get update && apt-get install -y python3-pip'
                 sh "python3 -m venv ${VENV_DIR}"
-                // Instalar Allure Commandline
-                sh '''
-                    wget -qO- https://github.com/allure-framework/allure2/releases/download/2.17.3/allure-2.17.3.zip | bsdtar -xvf- -C /opt/
-                    ln -s /opt/allure-2.17.3/bin/allure /usr/bin/allure
-                '''
             }
         }
         stage('Install Dependencies') {
