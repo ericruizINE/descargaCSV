@@ -1,5 +1,8 @@
 pipeline {
-    agent any    
+    agent {
+        label 'any'
+        customWorkspace '/var/jenkins_home/workspace/Publicacion' // Ruta específica del workspace
+    } 
     environment {
         VENV_DIR = '/var/jenkins_home/workspace/Publicacion/venv'
         APP_VERSION = '1.0.0'
@@ -93,7 +96,7 @@ pipeline {
                 def allureReportUrl = "${env.BUILD_URL}allure"
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
                 def reportpy = "${env.BUILD_URL}execution/node/3/ws/tests/report.html"
-                echo "El reporte de Reporte PYTest está disponible en: ${reportpy}"
+                echo "El reporte de PYTest está disponible en: ${reportpy}"
             }
         }
     }
