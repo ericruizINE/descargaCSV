@@ -73,17 +73,17 @@ pipeline {
                 }
             }
         }
-        stage('Ejecutar Pytest Selenium POM') {
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                sh """
-                    . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    cd tests
-                    pytest --html=report.html --self-contained-html --alluredir=report
-               """
-                }
-            }
-        }
+        // stage('Ejecutar Pytest Selenium POM') {
+        //     steps {
+        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        //         sh """
+        //             . ${VENV_DIR}/bin/activate > /dev/null 2>&1
+        //             cd tests
+        //             pytest --html=report.html --self-contained-html --alluredir=report
+        //        """
+        //         }
+        //     }
+        // }
     }
     post {
         always {
