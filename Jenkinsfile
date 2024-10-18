@@ -49,7 +49,7 @@ pipeline {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest descarga.py --html=report.html --self-contained-html --alluredir=report
+                    pytest descarga.py --html=report1.html --self-contained-html --alluredir=report
                """
           }
         }
@@ -58,7 +58,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest presidencia.py --html=report.html --self-contained-html --alluredir=report
+                    pytest presidencia.py --html=report2.html --self-contained-html --alluredir=report
                """
                 }
             }
@@ -68,7 +68,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest pytestpublicsv.py --html=report.html --self-contained-html --alluredir=report
+                    pytest pytestpublicsv.py --html=report3.html --self-contained-html --alluredir=report
                """
                 }
             }
@@ -81,6 +81,7 @@ pipeline {
                 // Publica la URL del reporte en la consola de Jenkins
                 def allureReportUrl = "${env.BUILD_URL}allure"
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
+                pytest_html_merger -i /var/jenkins_home/workspace/Publicacion -o /var/jenkins_home/workspace/Publicacion/report.html
                 def reportpy = "${env.BUILD_URL}execution/node/3/ws/report.html"
                 echo "El reporte de PYTest está disponible en: ${reportpy}"
             }
