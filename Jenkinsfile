@@ -52,6 +52,7 @@ pipeline {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest descarga.py --html=pytestreport/report1.html --self-contained-html --alluredir=report
+                    archiveArtifacts artifacts: 'pytestreport/report1.html', fingerprint: true
                """
           }
         }
@@ -61,6 +62,7 @@ pipeline {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest presidencia.py --html=pytestreport/report2.html --self-contained-html --alluredir=report
+                    archiveArtifacts artifacts: 'pytestreport/report2.html', fingerprint: true
                """
                 }
             }
@@ -71,8 +73,9 @@ pipeline {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest pytestpublicsv.py --html=pytestreport/report3.html --self-contained-html --alluredir=report
+                    archiveArtifacts artifacts: 'pytestreport/report3.html', fingerprint: true
                     pytest_html_merger -i /var/jenkins_home/workspace/Publicacion/pytestreport -o /var/jenkins_home/workspace/Publicacion/pytestreport/report.html
-                    archiveArtifacts artifacts: '/var/jenkins_home/workspace/Publicacion/pytestreport/*.html', fingerprint: true
+                    archiveArtifacts artifacts: 'pytestreport/report.html', fingerprint: true
                """
                 }
             }
