@@ -84,6 +84,13 @@ pipeline {
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
                 def reportpy = "${env.BUILD_URL}execution/node/3/ws/report.html"
                 echo "El reporte de PYTest está disponible en: ${reportpy}"
+                publishHTML (target : [allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '/',
+                reportFiles: 'report.html',
+                reportName: 'My Reports',
+                reportTitles: 'The Report'])
             }
         }
     }
