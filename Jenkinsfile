@@ -69,6 +69,7 @@ pipeline {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest pytestpublicsv.py --html=report3.html --self-contained-html --alluredir=report
+                    pytest_html_merger -i /var/jenkins_home/workspace/Publicacion -o /var/jenkins_home/workspace/Publicacion/report.html
                """
                 }
             }
@@ -81,7 +82,6 @@ pipeline {
                 // Publica la URL del reporte en la consola de Jenkins
                 def allureReportUrl = "${env.BUILD_URL}allure"
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
-                pytest_html_merger -i /var/jenkins_home/workspace/Publicacion -o /var/jenkins_home/workspace/Publicacion/report.html
                 def reportpy = "${env.BUILD_URL}execution/node/3/ws/report.html"
                 echo "El reporte de PYTest está disponible en: ${reportpy}"
             }
