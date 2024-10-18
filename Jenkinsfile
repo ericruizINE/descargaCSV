@@ -51,7 +51,7 @@ pipeline {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest descarga.py --html=pytestreport/report1.html --alluredir=report
+                    pytest descarga.py --html=pytestreport/report1.html --self-contained-html --alluredir=report
                """
           }
         }
@@ -60,7 +60,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest presidencia.py --html=pytestreport/report2.html --alluredir=report
+                    pytest presidencia.py --html=pytestreport/report2.html --self-contained-html --alluredir=report
                """
                 }
             }
@@ -70,8 +70,9 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest pytestpublicsv.py --html=report3.html --alluredir=report
+                    pytest pytestpublicsv.py --html=pytestreport/report3.html --self-contained-html --alluredir=report
                     pytest_html_merger -i /var/jenkins_home/workspace/Publicacion/pytestreport -o /var/jenkins_home/workspace/Publicacion/pytestreport/report.html
+                    archiveArtifacts artifacts: 'pytestreport/*.html', fingerprint: true
                """
                 }
             }
