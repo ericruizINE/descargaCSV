@@ -87,7 +87,7 @@ pipeline {
                 publishHTML (target : [allowMissing: false,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: '/',
+                reportDir: '/var/jenkins_home/workspace/Publicacion',
                 reportFiles: 'report.html',
                 reportName: 'My Reports',
                 reportTitles: 'The Report'])
