@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Generar archivo environment.properties con variables de entorno
-                    def alluredir = "tests/report"
+                    def alluredir = "report"
                     sh "mkdir -p ${alluredir}"
                     sh """
                         echo 'APP_VERSION=${env.APP_VERSION}' >> ${alluredir}/environment.properties
@@ -49,7 +49,7 @@ pipeline {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest descarga.py --alluredir=report
+                    pytest descarga.py --html=report.html --self-contained-html --alluredir=report
                """
           }
         }
@@ -58,7 +58,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest presidencia.py --alluredir=report
+                    pytest presidencia.py --html=report.html --self-contained-html --alluredir=report
                """
                 }
             }
@@ -68,22 +68,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest pytestpublicsv.py --alluredir=report
+                    pytest pytestpublicsv.py --html=report.html --self-contained-html --alluredir=report
                """
                 }
             }
         }
-        // stage('Ejecutar Pytest Selenium POM') {
-        //     steps {
-        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-        //         sh """
-        //             . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-        //             cd tests
-        //             pytest --html=report.html --self-contained-html --alluredir=report
-        //        """
-        //         }
-        //     }
-        // }
     }
     post {
         always {
@@ -92,7 +81,7 @@ pipeline {
                 // Publica la URL del reporte en la consola de Jenkins
                 def allureReportUrl = "${env.BUILD_URL}allure"
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
-                def reportpy = "${env.BUILD_URL}execution/node/3/ws/tests/report.html"
+                def reportpy = "${env.BUILD_URL}execution/node/3/ws/report.html"
                 echo "El reporte de PYTest está disponible en: ${reportpy}"
             }
         }
