@@ -72,7 +72,7 @@ pipeline {
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
                     pytest pytestpublicsv.py --html=pytestreport/report3.html --self-contained-html --alluredir=report
                     pytest_html_merger -i /var/jenkins_home/workspace/Publicacion/pytestreport -o /var/jenkins_home/workspace/Publicacion/pytestreport/report.html
-                    archiveArtifacts artifacts: 'pytestreport/*.html', fingerprint: true
+                    archiveArtifacts artifacts: '/var/jenkins_home/workspace/Publicacion/pytestreport/*.html', fingerprint: true
                """
                 }
             }
