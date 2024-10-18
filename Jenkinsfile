@@ -49,7 +49,7 @@ pipeline {
           steps {
             sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest descarga.py --html=report1.html --self-contained-html --alluredir=report
+                    pytest descarga.py --html=report1.html --alluredir=report
                """
           }
         }
@@ -58,7 +58,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest presidencia.py --html=report2.html --self-contained-html --alluredir=report
+                    pytest presidencia.py --html=report2.html --alluredir=report
                """
                 }
             }
@@ -68,7 +68,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh """
                     . ${VENV_DIR}/bin/activate > /dev/null 2>&1
-                    pytest pytestpublicsv.py --html=report3.html --self-contained-html --alluredir=report
+                    pytest pytestpublicsv.py --html=report3.html --alluredir=report
                     pytest_html_merger -i /var/jenkins_home/workspace/Publicacion -o /var/jenkins_home/workspace/Publicacion/report.html
                """
                 }
@@ -84,6 +84,13 @@ pipeline {
                 echo "El reporte de Allure está disponible en: ${allureReportUrl}"
                 def reportpy = "${env.BUILD_URL}execution/node/3/ws/report.html"
                 echo "El reporte de PYTest está disponible en: ${reportpy}"
+                publishHTML (target : [allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '/var/jenkins_home/workspace/Publicacion',
+                reportFiles: 'report.html',
+                reportName: 'My Reports',
+                reportTitles: 'The Report'])
             }
         }
     }
