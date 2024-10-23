@@ -21,8 +21,8 @@ pipeline {
                 sh 'apt-get update && apt-get install -y python3-venv'
                 sh 'apt-get update && apt-get install -y python3-pip'
                 sh "python3 -m venv ${VENV_DIR}"
-                exit
-                EOF
+                sh 'exit'
+                sh 'EOF'
             }
         }
         stage('Install Dependencies') {
