@@ -17,12 +17,12 @@ pipeline {
         stage('Install & Setup venv') {
             steps {
                 // Instalar el paquete python3-venv si aún no está instalado
-                sh 'sudo su - root <<EOF'
-                sh 'apt-get update && apt-get install -y python3-venv'
-                sh 'apt-get update && apt-get install -y python3-pip'
+                // sh 'sudo su - root <<EOF'
+                // sh 'apt-get update && apt-get install -y python3-venv'
+                // sh 'apt-get update && apt-get install -y python3-pip'
                 sh "python3 -m venv ${VENV_DIR}"
-                sh 'exit'
-                sh 'EOF'
+                // sh 'exit'
+                // sh 'EOF'
             }
         }
         stage('Install Dependencies') {
