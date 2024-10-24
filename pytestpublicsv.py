@@ -69,7 +69,7 @@ def leer_datos_csv(filepath):
 @pytest.fixture
 def setup():
     # Configurar el controlador de Chrome
-    chromedriver_autoinstaller.install(version="128.0.6613.84")
+    chromedriver_autoinstaller.install()
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=1920x1080")
